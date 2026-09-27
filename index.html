@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Masterclass Atendimento Mágico · Fortaleza</title>
+<meta name="description" content="Masterclass presencial com Daniel Donato: cases, estratégias e princípios da Disney para transformar atendimento em experiência. 07/10 · Shopping Del Paseo, Fortaleza.">
+<meta property="og:title" content="Masterclass Atendimento Mágico · Um case Disney">
+<meta property="og:description" content="07 de outubro · 19h · Shopping Del Paseo, Aldeota – Fortaleza. Vagas limitadas.">
+<meta property="og:image" content="daniel.jpg">
+<meta name="theme-color" content="#0A0907">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@1,9..144,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+<!-- ================= CONFIGURAÇÃO ================= -->
+<script>
+  window.CONFIG = {
+    whatsapp: "5585999711108",
+    mensagem: "Olá! Sou {nome} e quero saber mais sobre a Masterclass Atendimento Mágico (07/10, Fortaleza).",
+    // E-mail que recebe cada contato (via FormSubmit). Vazio = não envia e-mail.
+    email: "comercial@sinapseonline.com",
+    // Opcional: URL do Google Apps Script (veja apps-script.gs) para guardar também numa planilha.
+    planilhaURL: "",
+    // Cole aqui o ID do seu Pixel da Meta. Vazio = Pixel desligado.
+    pixelID: ""
+  };
+</script>
+
+<!-- Meta Pixel (carrega só se pixelID estiver preenchido) -->
+<script>
+  if (window.CONFIG.pixelID) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', window.CONFIG.pixelID);
+    fbq('track', 'PageView');
+  }
+</script>
+
+<style>
+  :root{
+    --bg:#0A0907; --bg2:#13110D; --card:#1A1712; --line:#2E271E;
+    --text:#F4EDE1; --muted:#BDB3A3; --soft:#8F8472;
+    --gold:#E3B04B; --gold-hi:#F2C96E;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  .wrap{max-width:480px;margin:0 auto;padding:0 20px}
+  .display{font-family:'Anton',Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:1.04;margin:0}
+  .display em{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;color:var(--gold)}
+
+  .hero{padding-top:40px;padding-bottom:28px}
+  .badge{display:inline-flex;gap:8px;align-items:center;padding:7px 14px;border:1px solid var(--gold);border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--gold)}
+  .badge i{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite}
+  @keyframes pulse{50%{opacity:.25}}
+  .hero h1{font-size:clamp(38px,11vw,50px);margin-top:20px}
+  .lead{font-size:17px;line-height:1.55;color:var(--muted);margin:18px 0 0}
+
+  .info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+  .info div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;display:flex;flex-direction:column;gap:3px}
+  .info .full{grid-column:1/-1}
+  .info span{font-size:10.5px;font-weight:700;letter-spacing:.13em;color:var(--soft)}
+  .info b{font-size:15px}
+
+  .cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;margin-top:22px;border:0;border-radius:14px;background:var(--gold);color:#0A0907;font:700 16px 'DM Sans',sans-serif;letter-spacing:.05em;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s}
+  .cta:hover{background:var(--gold-hi)} .cta:active{transform:scale(.98)}
+  .cta svg{width:22px;height:22px}
+  .trust{display:flex;justify-content:center;gap:10px;margin-top:12px;font-size:13px;color:var(--soft)}
+  .trust b{color:var(--gold);font-weight:400}
+
+  .speaker{padding-top:36px;padding-bottom:36px;border-top:1px solid #1F1A14}
+  .photo{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/4.3;background:var(--card)}
+  .photo img{width:100%;height:100%;object-fit:cover;object-position:30% 20%}
+  .photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:48px 18px 16px;background:linear-gradient(transparent,rgba(10,9,7,.92))}
+  .photo figcaption small{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--gold)}
+  .photo figcaption strong{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:32px;text-transform:uppercase;letter-spacing:.01em}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .stats div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .stats b{display:block;font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:34px;line-height:1;color:var(--gold)}
+  .stats span{display:block;margin-top:6px;font-size:13.5px;line-height:1.4;color:var(--muted)}
+  .bio{font-size:15px;line-height:1.55;color:var(--muted);margin:16px 0 0}
+
+  .learn{padding-top:36px;padding-bottom:44px;border-top:1px solid #1F1A14}
+  .learn h2{font-size:30px}
+  .list{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:16px}
+  .list li{display:flex;gap:14px}
+  .list li b{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:24px;line-height:1.1;color:var(--gold);min-width:32px}
+  .list li p{margin:0;font-size:15.5px;line-height:1.5;color:#E3D9C9}
+
+  footer{padding:24px 20px 40px;text-align:center;font-size:12px;color:#6E6556;border-top:1px solid #1F1A14}
+
+  /* Sticky CTA mobile */
+  .sticky{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:rgba(10,9,7,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .25s;z-index:20}
+  .sticky.show{transform:none}
+  .sticky .cta{margin:0;min-height:54px;max-width:440px;margin:0 auto}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.72)}
+  .modal.open{display:flex}
+  .sheet{width:100%;max-width:480px;background:var(--bg2);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;padding:26px 20px calc(26px + env(safe-area-inset-bottom));animation:up .25s ease-out}
+  @media(min-width:560px){.modal{align-items:center}.sheet{border-radius:22px;border-bottom:1px solid var(--line)}}
+  @keyframes up{from{transform:translateY(40px);opacity:0}}
+  .sheet-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .sheet h3{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:26px;line-height:1.1;text-transform:uppercase;margin:0}
+  .close{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .sheet p{font-size:14.5px;line-height:1.5;color:var(--muted);margin:10px 0 18px}
+  form{display:flex;flex-direction:column;gap:14px}
+  label{display:flex;flex-direction:column;gap:7px;font-size:11px;font-weight:700;letter-spacing:.13em;color:var(--soft)}
+  input{min-height:54px;padding:0 16px;border-radius:12px;border:1px solid #40372B;background:var(--bg);color:var(--text);font:400 16px 'DM Sans',sans-serif}
+  input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+  .err{display:none;font-size:13px;color:#F08A6C;letter-spacing:0;font-weight:500}
+  .sheet .cta{margin-top:4px}
+  .safe{text-align:center;font-size:12.5px;color:var(--soft)}
+</style>
+</head>
+<body>
+
+<main>
+  <section class="hero wrap">
+    <span class="badge"><i></i>MASTERCLASS PRESENCIAL · FORTALEZA</span>
+    <h1 class="display">O que a Disney sabe sobre <em>atendimento</em> que a sua empresa ainda não aplica?</h1>
+    <p class="lead">Cases, estratégias e princípios da Disney para transformar atendimento em experiências que fazem o cliente <strong style="color:var(--text)">confiar, voltar e indicar.</strong></p>
+
+    <div class="info">
+      <div><span>DATA</span><b>07 de outubro</b><small style="color:var(--soft);font-size:13px">quarta-feira</small></div>
+      <div><span>HORÁRIO</span><b>19h às 21h45</b><small style="color:var(--soft);font-size:13px">presencial</small></div>
+      <div class="full"><span>LOCAL</span><b>Auditório do Shopping Del Paseo</b><small style="color:var(--soft);font-size:13px">Aldeota – Fortaleza, CE</small></div>
+    </div>
+
+    <button class="cta" type="button" data-open id="heroCta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.4-4.4A8.5 8.5 0 1 1 20.5 11.6z"/></svg>
+      QUERO SABER MAIS
+    </button>
+    <div class="trust"><span>Vagas limitadas</span><b>•</b><span>Atendimento pelo WhatsApp</span></div>
+  </section>
+
+  <section class="speaker wrap">
+    <figure class="photo" style="margin:0">
+      <img src="daniel.jpg" alt="Daniel Donato conduzindo uma palestra" width="748" height="861" loading="lazy">
+      <figcaption><small>QUEM CONDUZ</small><strong>Daniel Donato</strong></figcaption>
+    </figure>
+    <div class="stats">
+      <div><b>+20</b><span>visitas presenciais aos parques Disney</span></div>
+      <div><b>+10</b><span>anos levando a excelência Disney aos negócios</span></div>
+    </div>
+    <p class="bio">Palestrante e especialista em experiência do cliente, Daniel traduz o que viu (e estudou) dentro da Disney em práticas simples para empresas de qualquer porte.</p>
+  </section>
+
+  <section class="learn wrap">
+    <h2 class="display">Nessa noite você vai <em>descobrir</em></h2>
+    <ul class="list">
+      <li><b>01</b><p>Os princípios por trás do atendimento de uma das marcas mais admiradas do mundo.</p></li>
+      <li><b>02</b><p>Cases reais da Disney e como adaptá-los à realidade do seu negócio.</p></li>
+      <li><b>03</b><p>Como transformar cada contato em uma experiência que gera confiança, retorno e indicação.</p></li>
+    </ul>
+    <button class="cta" type="button" data-open>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.4-4.4A8.5 8.5 0 1 1 20.5 11.6z"/></svg>
+      QUERO GARANTIR MINHA VAGA
+    </button>
+  </section>
+</main>
+
+<footer>Masterclass Atendimento Mágico · Daniel Donato · Fortaleza 2026</footer>
+
+<div class="sticky" id="sticky">
+  <button class="cta" type="button" data-open>QUERO SABER MAIS NO WHATSAPP</button>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="sheet">
+    <div class="sheet-top">
+      <h3 id="mTitle">Falta só um passo ✦</h3>
+      <button class="close" type="button" aria-label="Fechar" data-close>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p>Preencha seus dados e você será levado ao nosso WhatsApp para receber valores e todas as informações da Masterclass.</p>
+    <form id="form" novalidate>
+      <label>NOME
+        <input id="nome" name="nome" type="text" autocomplete="given-name" placeholder="Seu nome" required>
+        <span class="err" id="eNome">Digite seu nome.</span>
+      </label>
+      <label>WHATSAPP
+        <input id="fone" name="whatsapp" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(85) 90000-0000" required>
+        <span class="err" id="eFone">Digite um WhatsApp válido com DDD.</span>
+      </label>
+      <button class="cta" type="submit" id="send">IR PARA O WHATSAPP</button>
+      <div class="safe">Seus dados estão seguros. Sem spam.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  var C = window.CONFIG;
+  var modal = document.getElementById('modal');
+  var nome = document.getElementById('nome');
+  var fone = document.getElementById('fone');
+  var sticky = document.getElementById('sticky');
+  var heroCta = document.getElementById('heroCta');
+
+  function track(ev){ try{ if (window.fbq) fbq('track', ev); }catch(e){} }
+
+  function open(){ modal.classList.add('open'); document.body.style.overflow='hidden'; setTimeout(function(){nome.focus()},150); track('InitiateCheckout'); }
+  function close(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+  document.querySelectorAll('[data-open]').forEach(function(b){ b.addEventListener('click', open); });
+  document.querySelector('[data-close]').addEventListener('click', close);
+  modal.addEventListener('click', function(e){ if(e.target===modal) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+
+  // Botão fixo aparece quando o botão principal sai da tela
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){ sticky.classList.toggle('show', !en[0].isIntersecting && en[0].boundingClientRect.top < 0); }).observe(heroCta);
+  }
+
+  // Máscara (85) 99999-9999
+  fone.addEventListener('input', function(){
+    var d = fone.value.replace(/\D/g,'').slice(0,11), o = d;
+    if (d.length > 2) o = '(' + d.slice(0,2) + ') ' + d.slice(2);
+    if (d.length > 7) o = '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7);
+    fone.value = o;
+  });
+
+  // UTMs da campanha vão junto para a planilha
+  var params = new URLSearchParams(location.search);
+
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var n = nome.value.trim(), d = fone.value.replace(/\D/g,'');
+    var okN = n.length >= 2, okF = d.length >= 10;
+    document.getElementById('eNome').style.display = okN ? 'none' : 'block';
+    document.getElementById('eFone').style.display = okF ? 'none' : 'block';
+    if (!okN) { nome.focus(); return; }
+    if (!okF) { fone.focus(); return; }
+
+    var btn = document.getElementById('send');
+    btn.disabled = true; btn.textContent = 'ABRINDO O WHATSAPP…';
+
+    track('Lead');
+    var link = 'https://wa.me/' + C.whatsapp + '?text=' + encodeURIComponent(C.mensagem.replace('{nome}', n.split(' ')[0]));
+
+    var go = function(){ track('Contact'); window.location.href = link; };
+
+    var lead = {
+      nome: n, whatsapp: '55' + d, data: new Date().toLocaleString('pt-BR'),
+      utm_source: params.get('utm_source') || '', utm_campaign: params.get('utm_campaign') || '', utm_content: params.get('utm_content') || ''
+    };
+    var envios = [];
+
+    if (C.email) {
+      envios.push(fetch('https://formsubmit.co/ajax/' + C.email, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Novo lead Masterclass: ' + n,
+          _template: 'table',
+          _captcha: 'false',
+          Nome: n,
+          WhatsApp: fone.value + '  (wa.me/55' + d + ')',
+          Data: lead.data,
+          Origem: lead.utm_source, Campanha: lead.utm_campaign, Anuncio: lead.utm_content
+        })
+      }));
+    }
+    if (C.planilhaURL) {
+      envios.push(fetch(C.planilhaURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(lead) }));
+    }
+
+    if (envios.length) {
+      var done = false, finish = function(){ if(!done){ done = true; go(); } };
+      Promise.allSettled(envios).then(finish);
+      setTimeout(finish, 2500); // não deixa a pessoa esperando
+    } else {
+      setTimeout(go, 300);
+    }
+  });
+})();
+</script>
+</body>
+</html>
