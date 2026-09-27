@@ -54,10 +54,12 @@
   .display em{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;color:var(--gold)}
 
   .hero{padding-top:40px;padding-bottom:28px}
-  .badge{display:inline-flex;gap:8px;align-items:center;padding:7px 14px;border:1px solid var(--gold);border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--gold)}
-  .badge i{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite}
+  .badge{display:inline-flex;gap:8px;align-items:center;padding:9px 14px;border:1.5px solid var(--gold);border-radius:999px;background:rgba(227,176,75,.1);font-size:clamp(12px,3.35vw,15px);font-weight:700;letter-spacing:.04em;color:var(--gold);white-space:nowrap;max-width:100%}
+  .badge i{width:8px;height:8px;flex-shrink:0;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite}
   @keyframes pulse{50%{opacity:.25}}
-  .hero h1{font-size:clamp(38px,11vw,50px);margin-top:20px}
+  .hero h1{font-size:clamp(34px,10.4vw,52px);margin-top:22px}
+  .hero h1 .l{display:block;white-space:nowrap}
+  .hero h1 em{font-size:1.18em;line-height:1.05}
   .lead{font-size:17px;line-height:1.55;color:var(--muted);margin:18px 0 0}
 
   .info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
@@ -122,12 +124,12 @@
 <main>
   <section class="hero wrap">
     <span class="badge"><i></i>MASTERCLASS PRESENCIAL · FORTALEZA</span>
-    <h1 class="display">O que a Disney sabe sobre <em>atendimento</em> que a sua empresa ainda não aplica?</h1>
+    <h1 class="display"><span class="l">O que a Disney</span> <span class="l">sabe sobre</span> <span class="l"><em>atendimento</em></span> <span class="l">que a sua empresa</span> <span class="l">ainda não aplica?</span></h1>
     <p class="lead">Cases, estratégias e princípios da Disney para transformar atendimento em experiências que fazem o cliente <strong style="color:var(--text)">confiar, voltar e indicar.</strong></p>
 
     <div class="info">
       <div><span>DATA</span><b>07 de outubro</b><small style="color:var(--soft);font-size:13px">quarta-feira</small></div>
-      <div><span>HORÁRIO</span><b>19h às 21h30</b><small style="color:var(--soft);font-size:13px">presencial</small></div>
+      <div><span>HORÁRIO</span><b>19h às 21h45</b><small style="color:var(--soft);font-size:13px">presencial</small></div>
       <div class="full"><span>LOCAL</span><b>Auditório do Shopping Del Paseo</b><small style="color:var(--soft);font-size:13px">Aldeota – Fortaleza, CE</small></div>
     </div>
 
