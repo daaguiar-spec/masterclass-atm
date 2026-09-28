@@ -8,7 +8,7 @@
 <meta property="og:title" content="Masterclass Atendimento Mágico · Um case Disney">
 <meta property="og:description" content="07 de outubro · 19h · Shopping Del Paseo, Aldeota – Fortaleza. Vagas limitadas.">
 <meta property="og:image" content="daniel.jpg">
-<meta name="theme-color" content="#0A0907">
+<meta name="theme-color" content="#0A0C2C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@1,9..144,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
@@ -42,126 +42,207 @@
 
 <style>
   :root{
-    --bg:#0A0907; --bg2:#13110D; --card:#1A1712; --line:#2E271E;
-    --text:#F4EDE1; --muted:#BDB3A3; --soft:#8F8472;
-    --gold:#E3B04B; --gold-hi:#F2C96E;
+    --night:#0A0C2C; --night2:#15124A; --violet:#2D1A66; --card:rgba(255,255,255,.06); --line:rgba(255,255,255,.14);
+    --text:#FFF8EC; --muted:#CFCBEB; --soft:#A29DCB;
+    --gold:#FFCB57; --gold-hi:#FFE08F; --pink:#FF6FB5; --cyan:#5AD8FF; --lilac:#B48CFF;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  html{background:var(--night)}
+  body{margin:0;color:var(--text);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background:
+      radial-gradient(120% 60% at 85% 0%, rgba(255,111,181,.28), transparent 60%),
+      radial-gradient(90% 50% at 0% 30%, rgba(90,216,255,.18), transparent 60%),
+      radial-gradient(100% 60% at 50% 100%, rgba(180,140,255,.25), transparent 70%),
+      linear-gradient(180deg, var(--night) 0%, var(--night2) 45%, var(--violet) 100%);
+    background-attachment:fixed}
   img{display:block;max-width:100%}
+  #sky{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+  main,footer{position:relative;z-index:1}
   .wrap{max-width:480px;margin:0 auto;padding:0 20px}
   .display{font-family:'Anton',Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.005em;line-height:1.04;margin:0}
-  .display em{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;color:var(--gold)}
+  .display em{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;
+    background:linear-gradient(100deg,var(--gold) 0%,var(--gold-hi) 25%,var(--pink) 50%,var(--cyan) 75%,var(--gold) 100%);background-size:250% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 6s linear infinite;padding-right:.08em}
+  @keyframes shimmer{to{background-position:-250% 0}}
 
-  .hero{padding-top:40px;padding-bottom:28px}
-  .badge{display:inline-flex;gap:12px;align-items:center;padding:12px 20px 12px 16px;border:1.5px solid var(--gold);border-radius:16px;background:rgba(227,176,75,.1);color:var(--gold);max-width:100%}
-  .badge i{width:10px;height:10px;flex-shrink:0;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite}
+  /* HERO */
+  .hero{padding-top:36px;padding-bottom:30px;position:relative}
+  .badge{position:relative;display:inline-flex;gap:12px;align-items:center;padding:12px 20px 12px 16px;border-radius:16px;background:rgba(10,12,44,.55);color:var(--gold);max-width:100%;isolation:isolate}
+  .badge::before{content:"";position:absolute;inset:0;border-radius:16px;padding:1.5px;background:linear-gradient(120deg,var(--gold),var(--pink),var(--cyan),var(--gold));background-size:300% 100%;animation:shimmer 5s linear infinite;
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;z-index:-1}
+  .badge i{width:10px;height:10px;flex-shrink:0;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 1.8s infinite}
   .badge span{display:flex;flex-direction:column;gap:3px;font-weight:700;line-height:1.15;white-space:nowrap}
   .badge b{font-size:clamp(15px,4.3vw,18px);letter-spacing:.06em;font-weight:700}
-  @keyframes pulse{50%{opacity:.25}}
-  .hero h1{font-size:clamp(34px,10.4vw,52px);margin-top:22px}
+  .badge b + b{color:var(--text)}
+  @keyframes pulse{50%{opacity:.3;transform:scale(.8)}}
+  .hero h1{font-size:clamp(34px,10.4vw,52px);margin-top:24px;text-shadow:0 4px 30px rgba(10,12,44,.6)}
   .hero h1 .l{display:block;white-space:nowrap}
+  .hero h1 .m{position:relative;display:inline-block}
   .hero h1 em{font-size:1.18em;line-height:1.05}
+  .spark{position:absolute;width:18px;height:18px;color:var(--gold-hi);animation:twinkle 2.4s ease-in-out infinite}
+  .spark.s1{right:-22px;top:-2px}.spark.s2{right:-6px;bottom:-4px;width:11px;height:11px;color:var(--cyan);animation-delay:.8s}.spark.s3{left:-4px;top:-8px;width:12px;height:12px;color:var(--pink);animation-delay:1.5s}
+  @keyframes twinkle{0%,100%{transform:scale(.4) rotate(0);opacity:.2}50%{transform:scale(1) rotate(45deg);opacity:1}}
   .lead{font-size:17px;line-height:1.55;color:var(--muted);margin:18px 0 0}
+  .lead strong{color:var(--text)}
 
-  .info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
-  .info div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;display:flex;flex-direction:column;gap:3px}
+  /* Countdown */
+  .count{margin-top:24px;padding:16px 16px 14px;border-radius:18px;background:linear-gradient(135deg,rgba(255,111,181,.18),rgba(90,216,255,.14));border:1px solid var(--line);backdrop-filter:blur(6px)}
+  .count small{display:block;text-align:center;font-size:11.5px;font-weight:700;letter-spacing:.16em;color:var(--gold)}
+  .count .t{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+  .count .t div{display:flex;flex-direction:column;align-items:center;padding:8px 0 6px;border-radius:12px;background:rgba(10,12,44,.55)}
+  .count .t b{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:30px;line-height:1.05;font-variant-numeric:tabular-nums}
+  .count .t span{font-size:11px;letter-spacing:.1em;color:var(--soft);font-weight:700}
+
+  .info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .info > div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;display:flex;gap:11px;align-items:flex-start;backdrop-filter:blur(6px)}
   .info .full{grid-column:1/-1}
-  .info span{font-size:10.5px;font-weight:700;letter-spacing:.13em;color:var(--soft)}
-  .info b{font-size:15px}
+  .info .ic{flex-shrink:0;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+  .info .ic svg{width:18px;height:18px}
+  .ic.p{background:rgba(255,111,181,.18);color:var(--pink)} .ic.c{background:rgba(90,216,255,.16);color:var(--cyan)} .ic.g{background:rgba(255,203,87,.16);color:var(--gold)}
+  .info p{margin:0;display:flex;flex-direction:column;gap:2px}
+  .info p span{font-size:10.5px;font-weight:700;letter-spacing:.13em;color:var(--soft)}
+  .info p b{font-size:15px}
+  .info p small{color:var(--soft);font-size:13px}
 
-  .cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;margin-top:22px;border:0;border-radius:14px;background:var(--gold);color:#0A0907;font:700 16px 'DM Sans',sans-serif;letter-spacing:.05em;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s}
-  .cta:hover{background:var(--gold-hi)} .cta:active{transform:scale(.98)}
-  .cta svg{width:22px;height:22px}
-  .trust{display:flex;justify-content:center;gap:10px;margin-top:12px;font-size:13px;color:var(--soft)}
-  .trust b{color:var(--gold);font-weight:400}
+  .cta{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;margin-top:22px;border:0;border-radius:16px;
+    background:linear-gradient(135deg,var(--gold-hi),var(--gold) 45%,#FFA94D);color:#1A0F3D;font:700 16px 'DM Sans',sans-serif;letter-spacing:.05em;cursor:pointer;text-decoration:none;
+    box-shadow:0 10px 30px -8px rgba(255,203,87,.65),0 0 0 1px rgba(255,255,255,.35) inset;transition:transform .12s, box-shadow .2s;animation:breathe 2.6s ease-in-out infinite}
+  .cta::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);transform:skewX(-20deg);animation:shine 3.2s ease-in-out infinite}
+  .cta:hover{box-shadow:0 14px 36px -8px rgba(255,203,87,.85),0 0 0 1px rgba(255,255,255,.45) inset}
+  .cta:active{transform:scale(.97)}
+  .cta svg{width:22px;height:22px;position:relative}
+  @keyframes shine{0%,55%{left:-60%}100%{left:130%}}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+  .trust{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:12px;font-size:13px;color:var(--soft)}
+  .trust b{color:var(--pink);font-weight:400}
 
-  .speaker{padding-top:36px;padding-bottom:36px;border-top:1px solid #1F1A14}
-  .photo{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/4.3;background:var(--card)}
+  /* SPEAKER */
+  .speaker{padding-top:40px;padding-bottom:36px}
+  .kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--cyan);margin-bottom:14px}
+  .photo{position:relative;margin:0;border-radius:22px;padding:3px;background:linear-gradient(135deg,var(--pink),var(--lilac),var(--cyan),var(--gold));background-size:300% 300%;animation:shimmer 8s linear infinite;box-shadow:0 20px 50px -18px rgba(255,111,181,.55)}
+  .photo .in{position:relative;border-radius:19px;overflow:hidden;aspect-ratio:4/4.3;background:var(--night2)}
   .photo img{width:100%;height:100%;object-fit:cover;object-position:30% 20%}
-  .photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:48px 18px 16px;background:linear-gradient(transparent,rgba(10,9,7,.92))}
+  .photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:60px 18px 16px;background:linear-gradient(transparent,rgba(21,18,74,.95))}
   .photo figcaption small{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--gold)}
-  .photo figcaption strong{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:32px;text-transform:uppercase;letter-spacing:.01em}
-  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-  .stats div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-  .stats b{display:block;font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:34px;line-height:1;color:var(--gold)}
+  .photo figcaption strong{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:34px;text-transform:uppercase;letter-spacing:.01em}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .stats div{border-radius:14px;padding:14px;border:1px solid var(--line)}
+  .stats div:first-child{background:linear-gradient(145deg,rgba(255,111,181,.22),rgba(255,111,181,.05))}
+  .stats div:last-child{background:linear-gradient(145deg,rgba(90,216,255,.2),rgba(90,216,255,.04))}
+  .stats b{display:block;font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:40px;line-height:1}
+  .stats div:first-child b{color:var(--pink)} .stats div:last-child b{color:var(--cyan)}
   .stats span{display:block;margin-top:6px;font-size:13.5px;line-height:1.4;color:var(--muted)}
   .bio{font-size:15px;line-height:1.55;color:var(--muted);margin:16px 0 0}
 
-  .learn{padding-top:36px;padding-bottom:44px;border-top:1px solid #1F1A14}
-  .learn h2{font-size:30px}
-  .list{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:16px}
-  .list li{display:flex;gap:14px}
-  .list li b{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:24px;line-height:1.1;color:var(--gold);min-width:32px}
-  .list li p{margin:0;font-size:15.5px;line-height:1.5;color:#E3D9C9}
+  /* LEARN */
+  .learn{padding-top:36px;padding-bottom:48px}
+  .learn h2{font-size:32px}
+  .list{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:12px}
+  .list li{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;background:var(--card);border:1px solid var(--line);backdrop-filter:blur(6px)}
+  .list .n{flex-shrink:0;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Anton',Impact,sans-serif;font-size:20px;color:#1A0F3D}
+  .list li:nth-child(1) .n{background:linear-gradient(135deg,var(--gold-hi),var(--gold))}
+  .list li:nth-child(2) .n{background:linear-gradient(135deg,#FFB3D6,var(--pink))}
+  .list li:nth-child(3) .n{background:linear-gradient(135deg,#B6EEFF,var(--cyan))}
+  .list li p{margin:0;font-size:15.5px;line-height:1.5;color:#EEE9FF}
 
-  footer{padding:24px 20px 40px;text-align:center;font-size:12px;color:#6E6556;border-top:1px solid #1F1A14}
+  footer{padding:24px 20px 110px;text-align:center;font-size:12px;color:var(--soft);border-top:1px solid var(--line)}
 
-  /* Sticky CTA mobile */
-  .sticky{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:rgba(10,9,7,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .25s;z-index:20}
+  /* Reveal on scroll */
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)}
+  .rv.on{opacity:1;transform:none}
+
+  /* Pixie-dust trail */
+  .dust{position:fixed;width:8px;height:8px;pointer-events:none;z-index:60;border-radius:50%;animation:dust 900ms ease-out forwards}
+  @keyframes dust{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+  /* Sticky CTA */
+  .sticky{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:rgba(10,12,44,.9);backdrop-filter:blur(10px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .25s;z-index:20}
   .sticky.show{transform:none}
-  .sticky .cta{margin:0;min-height:54px;max-width:440px;margin:0 auto}
+  .sticky .cta{margin:0 auto;min-height:54px;max-width:440px;animation:none}
 
   /* Modal */
-  .modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.72)}
+  .modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(5,6,24,.75);backdrop-filter:blur(3px)}
   .modal.open{display:flex}
-  .sheet{width:100%;max-width:480px;background:var(--bg2);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;padding:26px 20px calc(26px + env(safe-area-inset-bottom));animation:up .25s ease-out}
-  @media(min-width:560px){.modal{align-items:center}.sheet{border-radius:22px;border-bottom:1px solid var(--line)}}
+  .sheet{position:relative;width:100%;max-width:480px;background:linear-gradient(180deg,#1C1760,#120F42);border:1px solid var(--line);border-bottom:0;border-radius:24px 24px 0 0;padding:26px 20px calc(26px + env(safe-area-inset-bottom));animation:up .3s cubic-bezier(.2,.8,.2,1)}
+  .sheet::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--pink),var(--gold),var(--cyan))}
+  @media(min-width:560px){.modal{align-items:center}.sheet{border-radius:24px;border-bottom:1px solid var(--line)}}
   @keyframes up{from{transform:translateY(40px);opacity:0}}
   .sheet-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-  .sheet h3{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:26px;line-height:1.1;text-transform:uppercase;margin:0}
+  .sheet h3{font-family:'Anton',Impact,sans-serif;font-weight:400;font-size:28px;line-height:1.1;text-transform:uppercase;margin:0}
+  .sheet h3 span{color:var(--gold)}
   .close{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center}
   .sheet p{font-size:14.5px;line-height:1.5;color:var(--muted);margin:10px 0 18px}
   form{display:flex;flex-direction:column;gap:14px}
   label{display:flex;flex-direction:column;gap:7px;font-size:11px;font-weight:700;letter-spacing:.13em;color:var(--soft)}
-  input{min-height:54px;padding:0 16px;border-radius:12px;border:1px solid #40372B;background:var(--bg);color:var(--text);font:400 16px 'DM Sans',sans-serif}
+  input{min-height:54px;padding:0 16px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(10,12,44,.7);color:var(--text);font:400 16px 'DM Sans',sans-serif}
+  input::placeholder{color:#7F7AAE}
   input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
-  .err{display:none;font-size:13px;color:#F08A6C;letter-spacing:0;font-weight:500}
-  .sheet .cta{margin-top:4px}
+  .err{display:none;font-size:13px;color:#FF9DB0;letter-spacing:0;font-weight:500}
+  .sheet .cta{margin-top:4px;animation:none}
   .safe{text-align:center;font-size:12.5px;color:var(--soft)}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    .rv{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
 
+<canvas id="sky" aria-hidden="true"></canvas>
+
 <main>
   <section class="hero wrap">
     <span class="badge"><i></i><span><b>MASTERCLASS PRESENCIAL</b><b>ATENDIMENTO MÁGICO</b></span></span>
-    <h1 class="display"><span class="l">O que a Disney</span> <span class="l">sabe sobre</span> <span class="l"><em>atendimento</em></span> <span class="l">que a sua empresa</span> <span class="l">ainda não aplica?</span></h1>
-    <p class="lead">Cases, estratégias e princípios da Disney para transformar atendimento em experiências que fazem o cliente <strong style="color:var(--text)">confiar, voltar e indicar.</strong></p>
+    <h1 class="display"><span class="l">O que a Disney</span> <span class="l">sabe sobre</span> <span class="l"><span class="m"><em>atendimento</em><svg class="spark s1" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg><svg class="spark s2" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg><svg class="spark s3" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z"/></svg></span></span> <span class="l">que a sua empresa</span> <span class="l">ainda não aplica?</span></h1>
+    <p class="lead">Cases, estratégias e princípios da Disney para transformar atendimento em experiências que fazem o cliente <strong>confiar, voltar e indicar.</strong></p>
+
+    <div class="count" id="count" aria-live="off">
+      <small>✦ A MAGIA COMEÇA EM ✦</small>
+      <div class="t">
+        <div><b id="cd">--</b><span>DIAS</span></div>
+        <div><b id="ch">--</b><span>HORAS</span></div>
+        <div><b id="cm">--</b><span>MIN</span></div>
+        <div><b id="cs">--</b><span>SEG</span></div>
+      </div>
+    </div>
 
     <div class="info">
-      <div><span>DATA</span><b>07 de outubro</b><small style="color:var(--soft);font-size:13px">quarta-feira</small></div>
-      <div><span>HORÁRIO</span><b>19h às 21h45</b><small style="color:var(--soft);font-size:13px">presencial</small></div>
-      <div class="full"><span>LOCAL</span><b>Auditório do Shopping Del Paseo</b><small style="color:var(--soft);font-size:13px">Aldeota – Fortaleza, CE</small></div>
+      <div><span class="ic p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span><p><span>DATA</span><b>07 de outubro</b><small>quarta-feira</small></p></div>
+      <div><span class="ic c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><p><span>HORÁRIO</span><b>19h às 21h45</b><small>presencial</small></p></div>
+      <div class="full"><span class="ic g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><p><span>LOCAL</span><b>Auditório do Shopping Del Paseo</b><small>Aldeota – Fortaleza, CE</small></p></div>
     </div>
 
     <button class="cta" type="button" data-open id="heroCta">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.4-4.4A8.5 8.5 0 1 1 20.5 11.6z"/></svg>
       QUERO SABER MAIS
     </button>
-    <div class="trust"><span>Vagas limitadas</span><b>•</b><span>Atendimento pelo WhatsApp</span></div>
+    <div class="trust"><span>Vagas limitadas</span><b>✦</b><span>Atendimento pelo WhatsApp</span></div>
   </section>
 
   <section class="speaker wrap">
-    <figure class="photo" style="margin:0">
-      <img src="daniel.jpg" alt="Daniel Donato conduzindo uma palestra" width="748" height="861" loading="lazy">
-      <figcaption><small>QUEM CONDUZ</small><strong>Daniel Donato</strong></figcaption>
+    <span class="kicker rv">✦ QUEM CONDUZ</span>
+    <figure class="photo rv">
+      <div class="in">
+        <img src="daniel.jpg" alt="Daniel Donato conduzindo uma palestra" width="748" height="861" loading="lazy">
+        <figcaption><small>ESPECIALISTA EM EXPERIÊNCIA DO CLIENTE</small><strong>Daniel Donato</strong></figcaption>
+      </div>
     </figure>
-    <div class="stats">
-      <div><b>+20</b><span>visitas presenciais aos parques Disney</span></div>
-      <div><b>+10</b><span>anos levando a excelência Disney aos negócios</span></div>
+    <div class="stats rv">
+      <div><b data-count="20">+20</b><span>visitas presenciais aos parques Disney</span></div>
+      <div><b data-count="10">+10</b><span>anos levando a excelência Disney aos negócios</span></div>
     </div>
-    <p class="bio">Palestrante e especialista em experiência do cliente, Daniel traduz o que viu (e estudou) dentro da Disney em práticas simples para empresas de qualquer porte.</p>
+    <p class="bio rv">Palestrante e especialista em experiência do cliente, Daniel traduz o que viu (e estudou) dentro da Disney em práticas simples para empresas de qualquer porte.</p>
   </section>
 
   <section class="learn wrap">
-    <h2 class="display">Nessa noite você vai <em>descobrir</em></h2>
+    <h2 class="display rv">Nessa noite você vai <em>descobrir</em></h2>
     <ul class="list">
-      <li><b>01</b><p>Os princípios por trás do atendimento de uma das marcas mais admiradas do mundo.</p></li>
-      <li><b>02</b><p>Cases reais da Disney e como adaptá-los à realidade do seu negócio.</p></li>
-      <li><b>03</b><p>Como transformar cada contato em uma experiência que gera confiança, retorno e indicação.</p></li>
+      <li class="rv"><span class="n">01</span><p>Os princípios por trás do atendimento de uma das marcas mais admiradas do mundo.</p></li>
+      <li class="rv"><span class="n">02</span><p>Cases reais da Disney e como adaptá-los à realidade do seu negócio.</p></li>
+      <li class="rv"><span class="n">03</span><p>Como transformar cada contato em uma experiência que gera confiança, retorno e indicação.</p></li>
     </ul>
-    <button class="cta" type="button" data-open>
+    <button class="cta rv" type="button" data-open>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.4-4.4A8.5 8.5 0 1 1 20.5 11.6z"/></svg>
       QUERO GARANTIR MINHA VAGA
     </button>
@@ -177,7 +258,7 @@
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="sheet">
     <div class="sheet-top">
-      <h3 id="mTitle">Falta só um passo ✦</h3>
+      <h3 id="mTitle">Falta só um passo <span>✦</span></h3>
       <button class="close" type="button" aria-label="Fechar" data-close>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
@@ -282,6 +363,122 @@
       setTimeout(go, 300);
     }
   });
+})();
+</script>
+<!-- ============ EFEITOS VISUAIS (céu estrelado, fogos, contagem, animações) ============ -->
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COLORS = ['#FFCB57','#FF6FB5','#5AD8FF','#B48CFF','#FFE08F'];
+
+  /* ---- Contagem regressiva até 07/10/2026 19h (Fortaleza) ---- */
+  var alvo = Date.parse('2026-10-07T19:00:00-03:00');
+  var box = document.getElementById('count');
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function tick(){
+    var ms = alvo - Date.now();
+    if (ms <= 0) { box.style.display = 'none'; return; }
+    var s = Math.floor(ms / 1000);
+    document.getElementById('cd').textContent = pad(Math.floor(s / 86400));
+    document.getElementById('ch').textContent = pad(Math.floor(s % 86400 / 3600));
+    document.getElementById('cm').textContent = pad(Math.floor(s % 3600 / 60));
+    document.getElementById('cs').textContent = pad(s % 60);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---- Revelar ao rolar + números que sobem ---- */
+  function countUp(el){
+    var fim = +el.getAttribute('data-count'), t0 = null;
+    if (reduce) return;
+    function step(t){ if(!t0) t0 = t; var p = Math.min((t - t0) / 1200, 1);
+      el.textContent = '+' + Math.round(fim * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  var rvs = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (!e.isIntersecting) return;
+        e.target.classList.add('on');
+        e.target.querySelectorAll('[data-count]').forEach(countUp);
+        io.unobserve(e.target);
+      });
+    }, { threshold: .15 });
+    rvs.forEach(function(el, i){ el.style.transitionDelay = (i % 3) * 90 + 'ms'; io.observe(el); });
+  } else {
+    rvs.forEach(function(el){ el.classList.add('on'); });
+  }
+
+  if (reduce) { drawStatic(); return; }
+
+  /* ---- Rastro de pó mágico (dedo / mouse) ---- */
+  var last = 0;
+  function dust(x, y, n, spread){
+    for (var i = 0; i < n; i++) {
+      var d = document.createElement('span');
+      d.className = 'dust';
+      var c = COLORS[(Math.random() * COLORS.length) | 0], sz = 3 + Math.random() * 6;
+      d.style.cssText = 'left:' + (x - sz/2) + 'px;top:' + (y - sz/2) + 'px;width:' + sz + 'px;height:' + sz + 'px;background:' + c +
+        ';box-shadow:0 0 8px ' + c + ';--dx:' + ((Math.random() - .5) * spread) + 'px;--dy:' + (Math.random() * spread * .8 + 10) + 'px';
+      document.body.appendChild(d);
+      setTimeout(function(el){ return function(){ el.remove(); }; }(d), 950);
+    }
+  }
+  window.addEventListener('pointermove', function(e){
+    var now = performance.now(); if (now - last < 40) return; last = now;
+    dust(e.clientX, e.clientY, 2, 40);
+  }, { passive: true });
+  document.querySelectorAll('.cta').forEach(function(b){
+    b.addEventListener('click', function(){ var r = b.getBoundingClientRect(); dust(r.left + r.width / 2, r.top + r.height / 2, 22, 160); });
+  });
+
+  /* ---- Céu: estrelas, estrelas cadentes e fogos ---- */
+  var cv = document.getElementById('sky'), ctx = cv.getContext('2d'), W, H, dpr, stars = [], shoots = [], parts = [];
+  function size(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = [];
+    var n = Math.min(Math.round(W * H / 4200), 260);
+    for (var i = 0; i < n; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.3 + .3, p: Math.random() * 6.28, s: .6 + Math.random() * 1.8 });
+  }
+  function drawStatic(){
+    var c = document.getElementById('sky'), x = c.getContext('2d');
+    c.width = innerWidth; c.height = innerHeight; x.fillStyle = '#fff';
+    for (var i = 0; i < 140; i++) { x.globalAlpha = Math.random() * .7 + .2; x.beginPath(); x.arc(Math.random() * c.width, Math.random() * c.height, Math.random() * 1.3 + .3, 0, 6.28); x.fill(); }
+  }
+  function firework(){
+    if (scrollY > H * .9 || document.hidden) return;
+    var x = W * (.15 + Math.random() * .7), y = H * (.08 + Math.random() * .25), c = COLORS[(Math.random() * COLORS.length) | 0], n = 34;
+    for (var i = 0; i < n; i++) { var a = i / n * 6.283, v = 1.2 + Math.random() * 1.6;
+      parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, c: c }); }
+  }
+  function shooting(){
+    if (document.hidden) return;
+    shoots.push({ x: Math.random() * W * .8 + W * .2, y: Math.random() * H * .35, vx: -(6 + Math.random() * 4), vy: 2.5 + Math.random() * 2, life: 1 });
+  }
+  var t = 0;
+  function frame(){
+    t += .016;
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) { var s = stars[i];
+      ctx.globalAlpha = .25 + .75 * Math.abs(Math.sin(t * s.s + s.p));
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill(); }
+    for (i = shoots.length - 1; i >= 0; i--) { var h = shoots[i];
+      var g = ctx.createLinearGradient(h.x, h.y, h.x - h.vx * 12, h.y - h.vy * 12);
+      g.addColorStop(0, 'rgba(255,248,236,' + h.life + ')'); g.addColorStop(1, 'rgba(255,248,236,0)');
+      ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(h.x, h.y); ctx.lineTo(h.x - h.vx * 12, h.y - h.vy * 12); ctx.stroke();
+      h.x += h.vx; h.y += h.vy; h.life -= .018; if (h.life <= 0) shoots.splice(i, 1); }
+    for (i = parts.length - 1; i >= 0; i--) { var p = parts[i];
+      ctx.globalAlpha = Math.max(p.life, 0); ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.8, 0, 6.283); ctx.fill(); ctx.shadowBlur = 0;
+      p.x += p.vx; p.y += p.vy; p.vy += .025; p.vx *= .985; p.vy *= .985; p.life -= .012; if (p.life <= 0) parts.splice(i, 1); }
+    requestAnimationFrame(frame);
+  }
+  size(); addEventListener('resize', size);
+  requestAnimationFrame(frame);
+  setTimeout(firework, 700); setTimeout(firework, 1300);
+  setInterval(firework, 2600);
+  setInterval(shooting, 4200);
 })();
 </script>
 </body>
