@@ -311,6 +311,11 @@
     fone.value = o;
   });
 
+  // Se a pessoa voltar do WhatsApp para a página, o botão volta a funcionar
+  window.addEventListener('pageshow', function(){
+    var b = document.getElementById('send'); b.disabled = false; b.textContent = 'IR PARA O WHATSAPP';
+  });
+
   // UTMs da campanha vão junto para a planilha
   var params = new URLSearchParams(location.search);
 
@@ -338,10 +343,12 @@
     var envios = [];
 
     if (C.email) {
+      // keepalive: o envio continua mesmo depois que a página abre o WhatsApp
       envios.push(fetch('https://formsubmit.co/ajax/' + C.email, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
+        keepalive: true,
+        headers: { 'Accept': 'application/json' },
+        body: new URLSearchParams({
           _subject: 'Novo lead Masterclass: ' + n,
           _template: 'table',
           _captcha: 'false',
@@ -350,10 +357,12 @@
           Data: lead.data,
           Origem: lead.utm_source, Campanha: lead.utm_campaign, Anuncio: lead.utm_content
         })
+      }).then(function(r){ return r.json(); }).then(function(j){
+        if (j && String(j.success) !== 'true') console.warn('FormSubmit:', j.message);
       }));
     }
     if (C.planilhaURL) {
-      envios.push(fetch(C.planilhaURL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(lead) }));
+      envios.push(fetch(C.planilhaURL, { method: 'POST', mode: 'no-cors', keepalive: true, body: new URLSearchParams(lead) }));
     }
 
     if (envios.length) {
