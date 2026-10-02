@@ -274,8 +274,11 @@
       </label>
       <label>WHATSAPP
         <input id="fone" name="whatsapp" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(85) 90000-0000" required>
-        <span class="err" id="eFone">Digite um WhatsApp válido com DDD.</span>
+        <span class="err" id="eFone">Digite seu celular com DDD. Ex.: (85) 99999-9999</span>
       </label>
+      <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+        <label>Empresa<input id="hp" name="empresa" type="text" tabindex="-1" autocomplete="off"></label>
+      </div>
       <button class="cta" type="submit" id="send">IR PARA O WHATSAPP</button>
       <div class="safe">Seus dados estão seguros. Sem spam.</div>
     </form>
@@ -293,7 +296,8 @@
 
   function track(ev){ try{ if (window.fbq) fbq('track', ev); }catch(e){} }
 
-  function open(){ modal.classList.add('open'); document.body.style.overflow='hidden'; setTimeout(function(){nome.focus()},150); track('InitiateCheckout'); }
+  var abertoEm = 0;
+  function open(){ abertoEm = Date.now(); modal.classList.add('open'); document.body.style.overflow='hidden'; setTimeout(function(){nome.focus()},150); track('InitiateCheckout'); }
   function close(){ modal.classList.remove('open'); document.body.style.overflow=''; }
   document.querySelectorAll('[data-open]').forEach(function(b){ b.addEventListener('click', open); });
   document.querySelector('[data-close]').addEventListener('click', close);
@@ -333,7 +337,9 @@
   document.getElementById('form').addEventListener('submit', function(e){
     e.preventDefault();
     var n = nome.value.trim(), d = fone.value.replace(/\D/g,'');
-    var okN = n.length >= 2, okF = d.length >= 10;
+    var DDDS = '11 12 13 14 15 16 17 18 19 21 22 24 27 28 31 32 33 34 35 37 38 41 42 43 44 45 46 47 48 49 51 53 54 55 61 62 63 64 65 66 67 68 69 71 73 74 75 77 79 81 82 83 84 85 86 87 88 89 91 92 93 94 95 96 97 98 99'.split(' ');
+    var okN = n.length >= 2 && /[a-zA-ZÀ-ú]/.test(n);
+    var okF = d.length === 11 && DDDS.indexOf(d.slice(0,2)) > -1 && d[2] === '9' && !/^(\d)\1+$/.test(d.slice(2));
     document.getElementById('eNome').style.display = okN ? 'none' : 'block';
     document.getElementById('eFone').style.display = okF ? 'none' : 'block';
     if (!okN) { nome.focus(); return; }
@@ -356,6 +362,11 @@
     };
     var envios = [];
 
+    // Anti-robô: campo invisível preenchido ou formulário enviado rápido demais
+    var robo = document.getElementById('hp').value !== '' || (abertoEm && Date.now() - abertoEm < 1500);
+    if (robo) { if (TESTE) mostrar('Bloqueado como robô (não enviou e-mail).'); setTimeout(go, 300); return; }
+    var extra = { 'Página': location.href.slice(0, 300), 'Dispositivo': navigator.userAgent.slice(0, 160) };
+
     if (C.web3formsKey) {
       envios.push(fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -366,9 +377,13 @@
           subject: 'Novo lead Masterclass: ' + n,
           from_name: 'Landing Page Masterclass',
           Nome: n,
-          WhatsApp: fone.value + '  (wa.me/55' + d + ')',
+          WhatsApp: fone.value,
+          'Abrir conversa': 'https://wa.me/55' + d,
+          'Se não abrir (sem o 9)': d.length === 11 ? 'https://wa.me/55' + d.slice(0,2) + d.slice(3) : '-',
           Data: lead.data,
-          Origem: lead.utm_source, Campanha: lead.utm_campaign, Anuncio: lead.utm_content
+          Origem: lead.utm_source, Campanha: lead.utm_campaign, Anuncio: lead.utm_content,
+          'Página': extra['Página'], Dispositivo: extra.Dispositivo,
+          botcheck: false
         })
       }).then(function(r){ return r.json(); })
         .then(function(j){ if (TESTE) mostrar('Web3Forms: ' + (j.success ? 'OK, e-mail enviado ✓' : 'erro · ' + j.message)); },
@@ -384,7 +399,9 @@
           _template: 'table',
           _captcha: 'false',
           Nome: n,
-          WhatsApp: fone.value + '  (wa.me/55' + d + ')',
+          WhatsApp: fone.value,
+          'Abrir conversa': 'https://wa.me/55' + d,
+          'Se não abrir (sem o 9)': d.length === 11 ? 'https://wa.me/55' + d.slice(0,2) + d.slice(3) : '-',
           Data: lead.data,
           Origem: lead.utm_source, Campanha: lead.utm_campaign, Anuncio: lead.utm_content
         })
