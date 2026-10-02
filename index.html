@@ -322,7 +322,9 @@
 
   // Ficha anti-robô: pedida ao servidor assim que a página abre
   var ficha = null;
-  function pegarFicha(){ return fetch(C.leadAPI, { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(j){ ficha = j; return j; }).catch(function(){ return null; }); }
+  function pegarFicha(){ return fetch(C.leadAPI, { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(j){ j.local = Date.now(); ficha = j; return j; }).catch(function(){ return null; }); }
+  // espera a ficha ter pelo menos 2,3 s (quem preenche muito rápido com o preenchimento automático não perde o envio)
+  function maturar(f){ var falta = f && f.local ? 2300 - (Date.now() - f.local) : 0; return falta > 0 ? new Promise(function(ok){ setTimeout(function(){ ok(f); }, falta); }) : f; }
   var fichaPronta = pegarFicha();
 
   // UTMs da campanha vão junto para a planilha
@@ -370,7 +372,7 @@
     if (robo) { if (TESTE) mostrar('Bloqueado como robô (não enviou e-mail).'); setTimeout(go, 300); return; }
 
     if (C.leadAPI) {
-      envios.push(fichaPronta.then(function(f){ return f || pegarFicha(); }).then(function(f){
+      envios.push(fichaPronta.then(function(f){ return f || pegarFicha(); }).then(maturar).then(function(f){
         return fetch(C.leadAPI, {
           method: 'POST',
           keepalive: true,
@@ -378,11 +380,12 @@
           body: JSON.stringify({
             nome: n, whatsapp: d, empresa: document.getElementById('hp').value,
             t: f && f.t, k: f && f.k,
-            utm_source: lead.utm_source, utm_campaign: lead.utm_campaign, utm_content: lead.utm_content
+            utm_source: lead.utm_source, utm_campaign: lead.utm_campaign, utm_content: lead.utm_content,
+            teste: TESTE
           })
         });
       }).then(function(r){ return r.json(); })
-        .then(function(j){ if (TESTE) mostrar(j.sent ? 'OK, e-mail enviado ✓' : 'Não enviado (filtro anti-robô ou configuração). Espere alguns segundos na página e tente de novo.'); },
+        .then(function(j){ if (TESTE) mostrar(j.sent ? 'OK, e-mail enviado ✓' : 'Não enviado. Motivo: ' + (j.motivo || '?') + (j.detalhe ? '\n' + j.detalhe : '')); },
               function(err){ if (TESTE) mostrar('Falha ao conectar: ' + err); }));
     }
     if (C.planilhaURL) {
@@ -392,7 +395,7 @@
     if (envios.length) {
       var done = false, finish = function(){ if(!done){ done = true; go(); } };
       Promise.allSettled(envios).then(finish);
-      setTimeout(finish, 2500); // não deixa a pessoa esperando
+      setTimeout(finish, 4000); // não deixa a pessoa esperando demais
     } else {
       setTimeout(go, 300);
     }
