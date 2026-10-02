@@ -11,7 +11,7 @@ const SECRET = process.env.RESEND_API_KEY || '';
 const TO = process.env.LEAD_EMAIL || 'daaguiar@gmail.com';
 const DDDS = new Set('11 12 13 14 15 16 17 18 19 21 22 24 27 28 31 32 33 34 35 37 38 41 42 43 44 45 46 47 48 49 51 53 54 55 61 62 63 64 65 66 67 68 69 71 73 74 75 77 79 81 82 83 84 85 86 87 88 89 91 92 93 94 95 96 97 98 99'.split(' '));
 
-const MIN_MS = 3000;            // ninguém preenche o formulário em menos de 3 s
+const MIN_MS = 2000;            // ninguém preenche o formulário em menos de 2 s
 const MAX_MS = 6 * 3600 * 1000; // ficha vale por 6 horas
 const LIMITE = 3;               // no máximo 3 envios...
 const JANELA = 10 * 60 * 1000;  // ...a cada 10 minutos por IP
@@ -41,40 +41,48 @@ module.exports = async function (req, res) {
   // 1) Ao abrir a página, ela pede uma "ficha" assinada com a hora.
   if (req.method === 'GET') {
     const t = Date.now();
-    return res.status(200).json({ t: t, k: assinar(t) });
+    return res.status(200).json({ t: t, k: assinar(t), cfg: !!SECRET });
   }
   if (req.method !== 'POST') return res.status(405).json({ ok: false });
 
   // Para robôs, respondemos "ok" sem enviar nada (assim eles não aprendem o filtro).
-  const fingir = function () { return res.status(200).json({ ok: true, sent: false }); };
-
+  // No modo teste (?teste na página) devolvemos o motivo, para facilitar o diagnóstico.
   let b = req.body;
-  try { if (typeof b === 'string') b = JSON.parse(b || '{}'); } catch (e) { return fingir(); }
+  try { if (typeof b === 'string') b = JSON.parse(b || '{}'); } catch (e) { b = {}; }
   b = b || {};
+  const fingir = function (motivo, extra) {
+    console.log('Lead não enviado:', motivo, extra || '');
+    const r = { ok: true, sent: false };
+    if (b.teste) { r.motivo = motivo; if (extra) r.detalhe = extra; }
+    return res.status(200).json(r);
+  };
 
   // 2) Precisa vir da própria página
   const origem = String(req.headers.origin || req.headers.referer || '');
   const host = String(req.headers.host || '');
-  if (!host || origem.indexOf(host) === -1) return fingir();
+  if (!host || origem.indexOf(host) === -1) return fingir('origem', origem + ' / ' + host);
 
   // 3) Campo invisível preenchido = robô
-  if (b.empresa) return fingir();
+  if (b.empresa) return fingir('campo-invisivel');
 
   // 4) Ficha válida, nem rápida nem velha demais
   const t = Number(b.t);
   const idade = Date.now() - t;
-  if (!SECRET || !t || b.k !== assinar(t) || idade < MIN_MS || idade > MAX_MS) return fingir();
+  if (!SECRET) return fingir('RESEND_API_KEY não configurada no Vercel (ou falta Redeploy)');
+  if (!t || b.k !== assinar(t)) return fingir('ficha inválida');
+  if (idade < MIN_MS) return fingir('enviado rápido demais (' + idade + ' ms)');
+  if (idade > MAX_MS) return fingir('ficha expirada');
 
   // 5) Nome e celular válidos
   const nome = String(b.nome || '').trim().slice(0, 80);
   const d = String(b.whatsapp || '').replace(/\D/g, '');
-  if (nome.length < 2 || !/[a-zA-ZÀ-ú]/.test(nome)) return fingir();
-  if (d.length !== 11 || !DDDS.has(d.slice(0, 2)) || d[2] !== '9' || /^(\d)\1+$/.test(d.slice(2))) return fingir();
+  if (nome.length < 2 || !/[a-zA-ZÀ-ú]/.test(nome)) return fingir('nome inválido');
+  if (d.length !== 11 || !DDDS.has(d.slice(0, 2)) || d[2] !== '9' || /^(\d)\1+$/.test(d.slice(2))) return fingir('celular inválido');
 
   // 6) Limite por IP e por número
   const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'sem-ip';
-  if (limitar(porIP, ip, LIMITE, JANELA)) return fingir();
-  if (limitar(vistos, d, 2, 24 * 3600 * 1000)) return fingir();
+  if (limitar(porIP, ip, LIMITE, JANELA)) return fingir('muitos envios deste IP');
+  if (limitar(vistos, d, 2, 24 * 3600 * 1000)) return fingir('número repetido');
 
   // 7) Envia o e-mail
   const fone = '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
@@ -108,12 +116,13 @@ module.exports = async function (req, res) {
       })
     });
     if (!r.ok) {
-      console.error('Resend', r.status, await r.text());
-      return res.status(200).json({ ok: false, sent: false });
+      const txt = await r.text();
+      console.error('Resend', r.status, txt);
+      return res.status(200).json(b.teste ? { ok: false, sent: false, motivo: 'Resend recusou (' + r.status + ')', detalhe: txt.slice(0, 300) } : { ok: false, sent: false });
     }
     return res.status(200).json({ ok: true, sent: true });
   } catch (e) {
     console.error('Falha no envio', e);
-    return res.status(200).json({ ok: false, sent: false });
+    return res.status(200).json(b.teste ? { ok: false, sent: false, motivo: 'falha ao conectar no Resend', detalhe: String(e) } : { ok: false, sent: false });
   }
 };
