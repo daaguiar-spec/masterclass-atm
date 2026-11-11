@@ -29,14 +29,14 @@ html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px}
 .app{height:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column;background:var(--wall);
   background-image:radial-gradient(color-mix(in srgb,var(--line) 75%,transparent) 1px,transparent 1px);background-size:18px 18px}
-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
-.avatar{object-fit:cover;width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;
+header{display:flex;align-items:center;gap:10px;padding:8px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+.avatar{object-fit:cover;width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;
   font-family:var(--display);font-size:13px;letter-spacing:.04em;flex:none;box-shadow:0 0 0 2px var(--panel),0 0 0 3.5px var(--gold)}
 .who{min-width:0}
-.who b{display:block;font-family:var(--display);font-weight:600;font-size:17px}
+.who b{display:block;font-family:var(--display);font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .who span{font-size:12.5px;color:var(--muted)}
 .who span.on::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#2FA36B;margin-right:6px;vertical-align:1px}
-#log{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:8px}
+#log{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
 .day{align-self:center;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--panel);
   padding:4px 10px;border-radius:8px;margin-bottom:6px}
 .msg{max-width:86%;padding:8px 11px 6px;border-radius:10px;line-height:1.45;box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 8%,transparent);
@@ -57,16 +57,16 @@ header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var
 .typing{align-self:flex-start;background:var(--bot);border-radius:10px;padding:10px 14px;display:flex;gap:4px}
 .typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1.1s infinite}
 .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
-#chips{display:flex;flex-wrap:wrap;gap:8px;padding:8px 16px 4px}
-.chip{font:inherit;font-size:13.5px;border:1px solid var(--accent);color:var(--accent);background:var(--panel);
-  padding:7px 12px;border-radius:999px;cursor:pointer}
+#chips{display:flex;flex-wrap:nowrap;gap:6px;padding:6px 16px 2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 88%,transparent)}#chips::-webkit-scrollbar{display:none}
+.chip{flex:none;white-space:nowrap;font:inherit;font-size:13px;border:1px solid var(--accent);color:var(--accent);background:var(--panel);
+  padding:6px 11px;border-radius:999px;cursor:pointer}
 .chip:hover{background:var(--accent);color:var(--accent-ink)}
 .chip.main{background:var(--accent);color:var(--accent-ink);font-weight:600}
-form{display:flex;gap:8px;padding:8px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+form{display:flex;gap:8px;padding:6px 12px calc(8px + env(safe-area-inset-bottom,0px))}
 #txt{flex:1;min-width:0;font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);
-  border-radius:999px;padding:11px 16px;outline:none}
+  border-radius:999px;padding:9px 14px;outline:none;font-size:16px}
 #txt:focus{border-color:var(--accent)}
-#send{width:46px;height:46px;flex:none;border:0;border-radius:50%;background:var(--accent);color:var(--accent-ink);cursor:pointer;display:grid;place-items:center}
+#send{width:42px;height:42px;flex:none;border:0;border-radius:50%;background:var(--accent);color:var(--accent-ink);cursor:pointer;display:grid;place-items:center}
 @keyframes pop{from{transform:translateY(6px);opacity:.4}to{transform:none;opacity:1}}
 @keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
 @media (prefers-reduced-motion:reduce){.msg,.typing i{animation:none}}
@@ -112,7 +112,7 @@ const CONFIG = {
 const log=document.getElementById('log'), chips=document.getElementById('chips'), st=document.getElementById('st');
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const hora=()=>new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-let busy=false;
+let busy=false;const vistos=new Set();
 
 function add(html,who){
   const d=document.createElement('div');d.className='msg '+who;
@@ -128,11 +128,11 @@ async function bot(list){
   }
   st.textContent='online';st.className='on';busy=false;
 }
-const OPCOES=["O que vou aprender?","Quem é o Daniel?","Data e horário","Quanto custa?","Para quem é?","Quais os bônus?","Como assisto?"];
+const OPCOES=[["O que vou aprender?","aprender"],["Quem é o Daniel?","quem"],["Quanto custa?","preco"],["Data e horário","quando"],["Quais os bônus?","bonus"],["Para quem é?","paraquem"],["Como assisto?","como"]];
 function opcoes(){
   chips.innerHTML='';
   const q=document.createElement('button');q.className='chip main';q.textContent='Eu quero o link';q.onclick=()=>enviar('Eu quero o link');chips.appendChild(q);
-  OPCOES.forEach(t=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=()=>enviar(t);chips.appendChild(b)});
+  OPCOES.filter(([,k])=>!vistos.has(k)).forEach(([t])=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=()=>enviar(t);chips.appendChild(b)});
 }
 const convite=`Quer garantir sua vaga? É só me dizer <strong>"eu quero o link"</strong>.`;
 
@@ -194,7 +194,7 @@ function intencao(t){
 async function enviar(texto){
   if(busy||!texto.trim())return;
   add(texto.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])),'me');
-  await wait(400);await bot(R[intencao(texto)]());opcoes();
+  const k=intencao(texto);vistos.add(k);await wait(400);await bot(R[k]());opcoes();chips.scrollLeft=0;
 }
 document.getElementById('f').addEventListener('submit',e=>{
   e.preventDefault();const i=document.getElementById('txt');const v=i.value;i.value='';enviar(v);
