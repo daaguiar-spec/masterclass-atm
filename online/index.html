@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="theme-color" content="#0B0A1F">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Masterclass Atendimento Mágico</title>
 <meta name="description" content="27ª Masterclass Atendimento Mágico! Um Case Disney, com Daniel Donato. Online e ao vivo, 26 de novembro de 2026, 19h. Ingresso R$ 47.">
@@ -118,6 +118,33 @@ form{display:flex;gap:8px;padding:6px 12px calc(8px + env(safe-area-inset-bottom
 @keyframes shine{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
 @keyframes glow{0%,100%{box-shadow:0 8px 22px rgba(217,164,65,.30)}50%{box-shadow:0 8px 30px rgba(233,196,106,.6)}}
 @media (prefers-reduced-motion:reduce){.msg,.typing i,.cover,.cover h1,.cta,.cover .live::before{animation:none}}
+
+/* ===== versão fundo branco ===== */
+:root{--night:#FFFFFF;--night2:#F6F3FC;--glass:#F3F0FA;--glass-line:#E3DDF1;--ink:#1F1A3A;--muted:#6B6590;--lilac:#5B47C9;color-scheme:light}
+.app{background:linear-gradient(180deg,#FFFFFF 0%,#F8F5FE 100%)}
+#sky{opacity:.55}
+header{background:rgba(255,255,255,.88);border-bottom-color:#ECE7F6}
+.msg.bot{background:#F3F0FA;border-color:#E6E0F3;backdrop-filter:none;-webkit-backdrop-filter:none}
+.msg strong{color:var(--ink)}
+.cover{background:#fff;border-color:rgba(200,149,47,.45);box-shadow:0 14px 34px rgba(59,42,140,.14)}
+.facts div{background:#F7F4FC;border-color:#E6E0F3}
+.stats div{background:#fff;border-color:#E6E0F3}
+.stats b{color:#B07F22}
+.msg li::marker{color:#C8952F}
+.tk{color:#F3EFFF;box-shadow:0 14px 30px rgba(59,42,140,.28)}
+.tk .when{color:#C9C2E6}
+.tk .price span{color:#C9C2E6}
+.chip{border-color:rgba(91,71,201,.35);color:#3B2A8C;background:#F4F1FC}
+.chip:hover{background:#E9E3FA}
+#txt{background:#F6F4FB;border-color:#E3DDF1}
+.typing{background:#F3F0FA;border-color:#E6E0F3}
+
+/* ===== quadros escuros no tom da arte principal ===== */
+.tk{background:radial-gradient(120% 90% at 85% 0%,rgba(208,141,60,.28) 0%,rgba(68,37,17,.35) 35%,rgba(8,7,12,0) 70%),#08070C;border-color:rgba(233,196,106,.6);box-shadow:0 14px 30px rgba(8,7,12,.35),inset 0 0 0 1px rgba(255,255,255,.04)}
+.tk .when,.tk .price span{color:#BDB3A6}
+.stats div{background:radial-gradient(120% 120% at 100% 0%,rgba(208,141,60,.22),rgba(8,7,12,0) 60%),#08070C;border-color:rgba(233,196,106,.35)}
+.stats b{color:#E9C46A}
+.stats span{color:#BDB3A6}
 </style>
 
 <!-- ===== META PIXEL (opcional) =====
@@ -437,7 +464,7 @@ const CAPA='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGB
  const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
  function size(){const r=c.getBoundingClientRect(),d=devicePixelRatio||1;W=r.width;H=r.height;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
   S=Array.from({length:Math.round(W*H/5200)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.3,p:Math.random()*6.3,g:Math.random()<.35}))}
- function draw(t){x.clearRect(0,0,W,H);for(const s of S){const a=calm?.6:.35+.45*Math.sin(t/900+s.p);x.globalAlpha=Math.max(.08,a);x.fillStyle=s.g?'#E9C46A':'#FFFFFF';x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill()}
+ function draw(t){x.clearRect(0,0,W,H);for(const s of S){const a=calm?.6:.35+.45*Math.sin(t/900+s.p);x.globalAlpha=Math.max(.08,a);x.fillStyle=s.g?'#D4A646':'#B9AEE8';x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill()}
   if(!calm)requestAnimationFrame(draw)}
  size();addEventListener('resize',size);requestAnimationFrame(draw)})();
 </script>
