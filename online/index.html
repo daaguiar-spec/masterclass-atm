@@ -161,6 +161,17 @@ header{background:rgba(255,255,255,.88);border-bottom-color:#ECE7F6}
 .opt .ic{flex:none;font-size:18px}
 .opt .ar{margin-left:auto;color:#C8952F}
 .opt:focus-visible{outline:2px solid #C8952F;outline-offset:2px}
+
+.perfis{display:grid;gap:8px;max-width:92%;animation:pop .25s ease-out}
+.pf{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 14px;border-radius:14px;font:600 15px var(--body);background:#fff;border:1.5px solid rgba(91,71,201,.3);color:var(--ink);cursor:pointer;box-shadow:0 2px 8px rgba(59,42,140,.06)}
+.pf small{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:1px}
+.pf .t{min-width:0}
+.pf .ic{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:#08070C}
+.pf .ar{margin-left:auto;color:#C8952F;font-size:18px}
+.pf:hover:not(:disabled){border-color:#C8952F}
+.pf:focus-visible{outline:2px solid #C8952F;outline-offset:2px}
+.pf:disabled{cursor:default;opacity:.45}
+.pf.on:disabled{opacity:1;border-color:#C8952F;background:#FFF8E8}
 </style>
 
 <!-- ===== META PIXEL (opcional) =====
@@ -337,7 +348,7 @@ function qualPerfil(t){
 
 /* ---------- fluxo principal ---------- */
 async function apresentar(p){
-  perfil=p||'geral';document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  perfil=p||'geral';document.querySelectorAll('.opt,.pf').forEach(b=>b.disabled=true);
   await bot([...(p?PERFIS[p]:[`Na Masterclass, o Daniel Donato mostra como a Disney transforma cada atendimento em um espetáculo, e como levar esse efeito UAU para a sua empresa.`]),PROVA,OFERTA()]);
   ofertaMostrada=true;opcoes();
 }
@@ -473,9 +484,12 @@ function perguntarPerfil(){
     botoes(PERFIS_OP.map(([t,ic])=>[ic+' '+({"Sou dono(a) do negócio":"Sou dono(a)","Lidero uma equipe":"Lidero equipe","Atendo clientes ou vendo":"Atendo / vendo"})[t]]));
     chips.className='wrap';return;
   }
-  chips.innerHTML='';chips.className='stack';
-  PERFIS_OP.forEach(([t,ic,sub])=>{const b=document.createElement('button');b.type='button';b.className='chip';
-    b.innerHTML=`<span class="ic">${ic}</span><span>${t}<small>${sub}</small></span><span class="ar">›</span>`;b.onclick=()=>enviar(t);chips.appendChild(b)});
+  chips.innerHTML='';
+  const box=document.createElement('div');box.className='perfis';
+  PERFIS_OP.forEach(([t,ic,sub])=>{const b=document.createElement('button');b.type='button';b.className='pf';
+    b.innerHTML=`<span class="ic">${ic}</span><span class="t">${t}<small>${sub}</small></span><span class="ar">›</span>`;
+    b.onclick=()=>{if(busy||perfil!==null)return;b.classList.add('on');enviar(t)};box.appendChild(b)});
+  log.appendChild(box);
   requestAnimationFrame(()=>log.scrollTop=log.scrollHeight);
 }
 /* ---------- abertura ---------- */
