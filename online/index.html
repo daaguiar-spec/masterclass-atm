@@ -172,6 +172,10 @@ header{background:rgba(255,255,255,.88);border-bottom-color:#ECE7F6}
 .pf:focus-visible{outline:2px solid #C8952F;outline-offset:2px}
 .pf:disabled{cursor:default;opacity:.45}
 .pf.on:disabled{opacity:1;border-color:#C8952F;background:#FFF8E8}
+
+.app>button#novo{position:absolute;width:auto;left:50%;transform:translateX(-50%);bottom:118px;z-index:5;border:0;cursor:pointer;font:700 13px var(--body);color:#22183F;
+  background:linear-gradient(135deg,#F2D27E,#D9A441);padding:8px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(59,42,140,.25);animation:pop .25s ease-out}
+#novo:focus-visible{outline:2px solid #3B2A8C;outline-offset:2px}
 </style>
 
 <!-- ===== META PIXEL (opcional) =====
@@ -194,6 +198,7 @@ Modo teste: abra a página com ?teste no final do link para ver se o lead foi en
     <button type="button" class="vaga" id="vaga">Vaga R$ 47</button>
   </header>
   <div id="log" aria-live="polite"><div class="day">Hoje</div></div>
+  <button type="button" id="novo" hidden>Nova mensagem ↓</button>
   <div id="chips"></div>
   <form id="f">
     <label for="txt" hidden>Mensagem</label>
@@ -222,7 +227,22 @@ const CONFIG = {
 
 const log=document.getElementById('log'), chips=document.getElementById('chips'), st=document.getElementById('st'), txt=document.getElementById('txt');
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
-let perto=true;log.addEventListener('scroll',()=>{perto=log.scrollHeight-log.scrollTop-log.clientHeight<160});addEventListener('resize',()=>{if(perto)log.scrollTop=log.scrollHeight});
+let perto=true, leitura=false, topoLote=0;
+const novo=document.getElementById('novo');
+function faltaVer(){return log.scrollHeight-log.scrollTop-log.clientHeight>24}
+log.addEventListener('scroll',()=>{perto=log.scrollHeight-log.scrollTop-log.clientHeight<160;if(!faltaVer())novo.hidden=true},{passive:true});
+addEventListener('resize',()=>{if(leitura)return;if(perto)log.scrollTop=log.scrollHeight});
+novo.onclick=()=>{log.scrollTo({top:log.scrollHeight,behavior:'smooth'});novo.hidden=true};
+/* mostra a mensagem nova sem passar do começo da resposta; o resto fica para a pessoa descer */
+function posicionar(el){
+  const f=()=>{
+    const fim=el.offsetTop+el.offsetHeight+12;
+    const alvo=Math.min(fim-log.clientHeight,topoLote);
+    if(alvo>log.scrollTop)log.scrollTo({top:alvo,behavior:'smooth'});
+    setTimeout(()=>{if(fim>log.scrollTop+log.clientHeight+4)novo.hidden=false},380);
+  };
+  requestAnimationFrame(f);
+}
 function rolar(){const f=()=>{log.scrollTop=log.scrollHeight};f();requestAnimationFrame(f);setTimeout(f,120);setTimeout(f,450)}
 const hora=()=>new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 const params=new URLSearchParams(location.search);
@@ -238,22 +258,28 @@ st.textContent=STATUS;
 /* ---------- interface ---------- */
 function add(html,who){
   const d=document.createElement('div');d.className='msg '+(who==='bot'&&html.startsWith('<div class="tk"')?'bot ticket':who);
-  d.innerHTML=html+'<time>'+hora()+'</time>';log.appendChild(d);rolar();
+  d.innerHTML=html+'<time>'+hora()+'</time>';log.appendChild(d);leitura?posicionar(d):rolar();
 }
-async function bot(list){
+const tam=h=>h.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').length;
+async function bot(list,ancorar=true){
   busy=true;chips.innerHTML='';clearTimeout(inativo);
+  leitura=ancorar;
+  if(ancorar){const ref=log.lastElementChild;topoLote=Math.max(0,(ref?ref.offsetTop:0)-10)}
+  let anterior=0;
   for(const html of list){
+    if(anterior)await wait(Math.min(3200,350+anterior*16));      /* tempo para ler a mensagem anterior */
     const t=document.createElement('div');t.className='typing';t.innerHTML='<i></i><i></i><i></i>';
-    log.appendChild(t);log.scrollTop=log.scrollHeight;st.textContent='digitando…';st.className='';
-    await wait(Math.min(1900,600+html.replace(/<[^>]+>/g,'').length*11));
-    t.remove();add(html,'bot');await wait(320);
+    log.appendChild(t);leitura?posicionar(t):rolar();st.textContent='digitando…';st.className='';
+    await wait(Math.min(1300,500+tam(html)*5));
+    t.remove();add(html,'bot');anterior=tam(html);
   }
+  await wait(250);
   st.textContent=STATUS;st.className='on';busy=false;
 }
 function botoes(lista){
   chips.innerHTML='';chips.className='';
   lista.forEach(([t,cls])=>{const b=document.createElement('button');b.type='button';b.className='chip'+(cls?' '+cls:'');b.textContent=t;b.onclick=()=>enviar(t);chips.appendChild(b)});
-  chips.scrollLeft=0;rolar();
+  chips.scrollLeft=0;leitura?posicionar(log.lastElementChild):rolar();
 }
 const TOPICOS=[["O que vou aprender?","aprender"],["Quem é o Daniel?","quem"],["Quanto custa?","preco"],["Data e horário","quando"],["Quais os bônus?","bonus"],["Para quem é?","paraquem"],["Como assisto?","como"]];
 function opcoes(){
@@ -351,7 +377,7 @@ function qualPerfil(t){
 /* ---------- fluxo principal ---------- */
 async function apresentar(p){
   perfil=p||'geral';document.querySelectorAll('.opt,.pf').forEach(b=>b.disabled=true);
-  await bot([...(p?PERFIS[p]:[`Na Masterclass, o Daniel Donato mostra como a Disney transforma cada atendimento em um espetáculo, e como levar esse efeito UAU para a sua empresa.`]),PROVA,OFERTA()]);
+  await bot([...(p?[PERFIS[p].join(' ')]:[`Na Masterclass, o Daniel Donato mostra como a Disney transforma cada atendimento em um espetáculo, e como levar esse efeito UAU para a sua empresa.`]),PROVA,OFERTA()]);
   ofertaMostrada=true;opcoes();
 }
 
@@ -504,7 +530,7 @@ const CAPA='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGB
   document.getElementById('vaga').onclick=()=>enviar('Eu quero o link');
   await wait(700);
   await bot([`Olá! Que bom que você quer saber mais sobre a Masterclass 👋`,
-    `Para eu te explicar do jeito certo: qual dessas opções descreve melhor você hoje?`]);
+    `Para eu te explicar do jeito certo: qual dessas opções descreve melhor você hoje?`],false);
   perguntarPerfil();
 })();
 
