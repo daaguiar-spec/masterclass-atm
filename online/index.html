@@ -314,11 +314,11 @@ const OFERTA=()=>`<div class="tk"><div class="top"><div class="lbl">Ingresso · 
 
 const PERFIS={
   dono:[`Então você sabe: o cliente não volta só pelo produto, ele volta pela experiência. O difícil é fazer a equipe inteira entregar o mesmo padrão, inclusive quando você não está por perto.`,
-        `Na Masterclass, o Daniel Donato mostra como a Disney faz milhares de pessoas encantarem no mesmo padrão, e como levar isso para a realidade da sua empresa.`],
+        `Na Masterclass, o Daniel Donato vai mostrar como a Disney faz milhares de pessoas encantarem no mesmo padrão, e como levar isso para a realidade da sua empresa.`],
   lider:[`Liderar atendimento tem um desafio clássico: um dia a equipe brilha, no outro alguém derruba a experiência do cliente.`,
-         `Na Masterclass, o Daniel Donato mostra os padrões que a Disney usa para encantar em escala e como preparar a sua equipe para cada contato com o cliente.`],
+         `Na Masterclass, o Daniel Donato vai mostrar os padrões que a Disney usa para encantar em escala e como preparar a sua equipe para cada contato com o cliente.`],
   atende:[`Quem está na linha de frente sabe: o cliente pode esquecer o preço, mas lembra de como foi tratado.`,
-          `Na Masterclass, o Daniel Donato ensina atitudes simples, para aplicar no dia seguinte, que criam o efeito UAU e fazem o cliente voltar e indicar.`]
+          `Na Masterclass, o Daniel Donato vai ensinar atitudes simples, para aplicar no dia seguinte, que criam o efeito UAU e fazem o cliente voltar e indicar.`]
 };
 
 const R={
@@ -381,7 +381,7 @@ function qualPerfil(t){
 /* ---------- fluxo principal ---------- */
 async function apresentar(p){
   perfil=p||'geral';document.querySelectorAll('.opt,.pf').forEach(b=>b.disabled=true);
-  await bot([...(p?[PERFIS[p].join(' ')]:[`Na Masterclass, o Daniel Donato mostra como a Disney transforma cada atendimento em um espetáculo, e como levar esse efeito UAU para a sua empresa.`]),PROVA,OFERTA()]);
+  await bot([...(p?[PERFIS[p].join(' ')]:[`Na Masterclass, o Daniel Donato vai mostrar como a Disney transforma cada atendimento em um espetáculo, e como levar esse efeito UAU para a sua empresa.`]),PROVA,OFERTA()]);
   ofertaMostrada=true;opcoes();
 }
 
