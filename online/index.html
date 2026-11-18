@@ -407,7 +407,7 @@ document.addEventListener('visibilitychange',async()=>{
   if(document.visibilityState!=='visible'||!esperandoVolta||conviteFeito)return;
   esperandoVolta=false;conviteFeito=true;
   while(busy)await wait(300);
-  await bot([`Conseguiu garantir sua vaga? 🎉 Então entre no grupo dos participantes no WhatsApp. É lá que mandamos os avisos e o link no dia da Masterclass.${BOTAO_GRUPO()}`]);
+  await bot([`Conseguiu garantir sua vaga? 🎉 Então entre no grupo dos participantes no WhatsApp. É lá que mandamos os lembretes e os avisos no dia da Masterclass. O acesso à transmissão chega no seu e-mail pelo Sympla.${BOTAO_GRUPO()}`]);
   opcoes();
 });
 
@@ -506,7 +506,7 @@ async function enviar(texto){
     destino='pessoa';await pedirNome(`Claro! Vou te passar para a equipe no WhatsApp. Antes, qual é o seu nome?`);return;
   }
   if(k==='lembrar'||/^sim, me lembre$/i.test(texto)){
-    await bot([`Combinado! No grupo do WhatsApp você recebe os avisos da Masterclass, a contagem regressiva e o link no dia. 😉${BOTAO_GRUPO()}`]);opcoes();return;
+    await bot([`Combinado! No grupo do WhatsApp você recebe os avisos da Masterclass, a contagem regressiva e os lembretes no dia. 😉${BOTAO_GRUPO()}`]);opcoes();return;
   }
   if(/^tenho uma duvida$|^tenho uma dúvida$/i.test(texto.trim())){await bot([`Claro! Escreva sua dúvida ou escolha um dos assuntos abaixo.`]);opcoes();return}
   vistos.add(k);
