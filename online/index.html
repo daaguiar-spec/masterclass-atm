@@ -183,8 +183,11 @@ header{background:rgba(255,255,255,.88);border-bottom-color:#ECE7F6}
 
 /* destaque "Ao vivo · online" na capa */
 .facts .aovivo{background:#08070C;border-color:rgba(233,196,106,.55);box-shadow:0 4px 14px rgba(220,38,38,.18)}
-.facts .aovivo b{color:#fff;display:flex;align-items:center;justify-content:center;gap:5px}
-.facts .aovivo i{width:7px;height:7px;border-radius:50%;background:#EF4444;box-shadow:0 0 0 0 rgba(239,68,68,.6);animation:pulso 1.6s infinite}
+.facts .aovivo{position:relative}
+.facts .aovivo b{color:#fff}
+.facts b{white-space:nowrap;font-size:clamp(12.5px,3.7vw,14px)}
+.facts .aovivo i{position:absolute;top:6px;right:6px}
+.facts .aovivo i{width:6px;height:6px;border-radius:50%;background:#EF4444;box-shadow:0 0 0 0 rgba(239,68,68,.6);animation:pulso 1.6s infinite}
 .facts .aovivo span{color:#E9C46A}
 @keyframes pulso{0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}70%{box-shadow:0 0 0 7px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
 @media (prefers-reduced-motion:reduce){.facts .aovivo i{animation:none}}
