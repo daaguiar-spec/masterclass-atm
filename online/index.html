@@ -310,7 +310,7 @@ const PROVA=`E não é teoria: esta é a <strong>27ª edição</strong> da Maste
 const OFERTA=()=>`<div class="tk"><div class="top"><div class="lbl">Ingresso · 27ª edição</div><div class="nm">Atendimento Mágico!<br>Um Case Disney</div><div class="when">${CONFIG.data[0].toUpperCase()+CONFIG.data.slice(1)}<br>${CONFIG.horario}<br>Online e ao vivo · ${CONFIG.plataforma}</div></div>
   <div class="cut"></div>
   <div class="bot"><div class="price"><b>${CONFIG.preco}</b><span>valor único</span></div>
-  <ul><li>Material de apoio em PDF</li><li>E-book <em>Além dos Bastidores</em></li><li>Certificado de participação</li></ul>
+  <ul><li>Material de apoio em PDF</li><li>E-book <em>Além dos Bastidores</em></li><li>Certificado de participação</li><li><strong>Cupom exclusivo de 45% no livro "Checklist Cliente Feliz"</strong></li></ul>
   <button type="button" class="cta" onclick="enviar('Eu quero o link')">Quero minha vaga</button></div></div>`;
 
 const PERFIS={
@@ -338,7 +338,7 @@ const R={
   paraquem:()=>[`É para todo mundo que tem contato com cliente ou lidera quem tem:<ul>
       <li>Donos de negócio, diretores, gerentes e supervisores</li><li>Equipes de atendimento e vendas</li><li>Colaboradores em geral</li></ul>`,
     `Serve para varejo, saúde, serviços e indústria. ${convite}`],
-  bonus:()=>[`Quem participa leva 3 bônus 🎁<ul><li>Material de apoio em PDF</li><li>E-book <strong>Além dos Bastidores</strong></li><li>Certificado virtual de participação</li></ul>`,convite],
+  bonus:()=>[`Quem participa leva 3 bônus 🎁<ul><li>Material de apoio em PDF</li><li>E-book <strong>Além dos Bastidores</strong></li><li>Certificado virtual de participação</li></ul>E ainda ganha um <strong>cupom exclusivo de 45% de desconto</strong> no livro do Daniel, "Checklist Cliente Feliz: Atendimento de Alto Impacto". 📘`,convite],
   como:()=>[`A transmissão é feita pelo <strong>${CONFIG.plataforma}</strong>. Depois da inscrição, o Sympla envia por e-mail as instruções de acesso. No dia, é só entrar pelo link.`,convite],
   metodo:()=>[`O método do Daniel é <strong>O Jeito Disney, na prática</strong>: cinco frentes que se conectam para transformar cultura em experiência.<ul>
       <li><strong>Cultura:</strong> clareza sobre o padrão de experiência que a empresa quer entregar</li>
@@ -346,7 +346,7 @@ const R={
       <li><strong>Atendimento:</strong> princípios viram comportamentos na jornada do cliente</li>
       <li><strong>Liderança:</strong> líderes preparados para sustentar a cultura no dia a dia</li>
       <li><strong>Experiência:</strong> cada contato vira uma oportunidade de criar valor</li></ul>`,convite],
-  preco:()=>[`O ingresso tem valor único de <strong>${CONFIG.preco}</strong>, já com os 3 bônus: material de apoio, e-book e certificado.`,convite],
+  preco:()=>[`O ingresso tem valor único de <strong>${CONFIG.preco}</strong>, já com os 3 bônus: material de apoio, e-book e certificado. E quem participa ainda ganha um cupom de 45% no livro do Daniel.`,convite],
   aovivo:()=>[`A Masterclass é ao vivo, assim você acompanha os exemplos e tira dúvidas na hora com o Daniel.`,`Se o horário for um problema para você, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te ajuda.`],
   oi:()=>[`Olá! 😊 Posso te contar o que você vai aprender, quem é o Daniel, a data, o valor ou já te mandar o link. O que prefere?`],
   obrigado:()=>[`Imagina! Estou por aqui se precisar de algo mais. 💜`],
