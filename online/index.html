@@ -365,6 +365,7 @@ const R={
   aovivo:()=>[`A Masterclass é ao vivo, assim você acompanha os exemplos e tira dúvidas na hora com o Daniel.`,`Se o horário for um problema para você, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te ajuda.`],
   oi:()=>[`Olá! 😊 Posso te contar o que você vai aprender, quem é o Daniel, a data, o valor ou já te mandar o link. O que prefere?`],
   obrigado:()=>[`Imagina! Estou por aqui se precisar de algo mais. 💜`],
+  grupoduvida:()=>[`Você quer saber do <strong>Ingresso Grupo</strong> (para levar a equipe, de 5 a 10 pessoas) ou do nosso <strong>grupo de avisos no WhatsApp</strong>?`],
   beneficio:()=>[`Você sai da Masterclass com atitudes práticas para aplicar já no dia seguinte: como preparar a equipe para cada contato com o cliente, os padrões que a Disney usa para encantar em escala e como transformar clientes satisfeitos em clientes fiéis.`,
     `E ainda leva:<ul><li>Material de apoio em PDF</li><li>E-book <strong>Além dos Bastidores</strong></li><li>Certificado de participação</li><li>Cupom exclusivo de 45% no livro do Daniel</li></ul>Tudo por <strong>${CONFIG.preco}</strong>. ${convite}`],
   duracao:()=>[`A Masterclass dura cerca de <strong>2 horas</strong>: ${CONFIG.horario}, na ${CONFIG.data}. Tempo suficiente para sair com o método e exemplos práticos.`,convite],
@@ -382,6 +383,10 @@ function intencao(t){
   const tem=re=>re.test(t);
   if(tem(/falar com|pessoa|humano|atendente|whatsapp da equipe|telefone|contato da equipe/))return 'pessoa';
   if(tem(/grupo de aviso|entrar no grupo|grupo do whats|lembre|lembrar|lembrete|mais tarde|me avis|avisa/))return 'lembrar';
+  if(tem(/grupo/)&&!tem(/whats|zap|aviso|entrar no grupo/)){
+    if(tem(/ingresso|valor|preco|quanto|pessoas|equipe|desconto|empresa|compra/))return 'equipe';
+    return 'grupoduvida';
+  }
   if(tem(/reembols|devolu|cancel|desist|garantia|arrepend|estorno/))return 'reembolso';
   if(tem(/golpe|seguro|confiavel|confiar|e real|verdade/))return 'seguro';
   if(tem(/ pix|cartao|boleto|parcel|forma de pag|como pag|como faco pra pagar|como faco para pagar/))return 'pagamento';
@@ -543,7 +548,9 @@ async function enviar(texto){
   }
   if(/^tenho uma duvida$|^tenho uma dúvida$/i.test(texto.trim())){await bot([`Claro! Escreva sua dúvida ou escolha um dos assuntos abaixo.`]);opcoes();return}
   vistos.add(k);
-  await bot(R[k]?R[k]():R.outro());opcoes();
+  await bot(R[k]?R[k]():R.outro());
+  if(k==='grupoduvida'){botoes([["Ingresso para equipe","main"],["Entrar no grupo de avisos"]]);return}
+  opcoes();
 }
 document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();const v=txt.value;txt.value='';enviar(v)});
 
