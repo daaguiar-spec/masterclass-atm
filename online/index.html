@@ -237,7 +237,7 @@ const CONFIG = {
   plataforma: "Sympla Streaming",
   preco: "R$ 47",
   precoGrupo: "R$ 37 por pessoa",                 /* ex.: "R$ 39 por pessoa" — vazio = "valor especial" */
-  linkPagamento: "",                 /* cole aqui o link do Sympla */
+  linkPagamento: "https://www.sympla.com.br/evento-online/27-masterclass-atendimento-magico-um-case-disney-ediCAo-online---com-daniel-donato/3650123",                 /* cole aqui o link do Sympla */
   whatsapp: "5585999711108",         /* WhatsApp da equipe */
   mensagemWhats: "Olá! Sou {nome} e quero saber mais sobre a Masterclass Atendimento Mágico online ({data}).",
   leadAPI: "/api/lead",              /* mesma captura de leads da página principal */
@@ -424,7 +424,7 @@ async function enviarLink(){
   if(CONFIG.linkPagamento){
     await bot([`Ótimo! 🎉 Aqui está o seu link para garantir a vaga:`,
       `<strong>${CONFIG.titulo}</strong><br>${CONFIG.dataCurta}, ${CONFIG.horario}<br>Ingresso: <strong>${CONFIG.preco}</strong><a class="cta" href="${CONFIG.linkPagamento}" target="_blank" rel="noopener" onclick="track('InitiateCheckout')">Garantir minha vaga</a>`,
-      `Depois da inscrição, o Sympla envia o acesso para o seu e-mail. Te vejo lá! ✨`]);
+      `Vai com a equipe? Na página do Sympla, escolha o <strong>Ingresso Grupo</strong> (5 a 10 pessoas, ${CONFIG.precoGrupo}).`,`Depois da inscrição, o Sympla envia o acesso para o seu e-mail. Te vejo lá! ✨`]);
     opcoes();
   }else{
     await bot([`Ótimo! 🎉 As inscrições abrem em breve.`,`Entre no nosso grupo do WhatsApp: o link de inscrição sai lá primeiro.${BOTAO_GRUPO()}`]);
