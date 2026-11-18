@@ -361,25 +361,43 @@ const R={
   aovivo:()=>[`A Masterclass é ao vivo, assim você acompanha os exemplos e tira dúvidas na hora com o Daniel.`,`Se o horário for um problema para você, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te ajuda.`],
   oi:()=>[`Olá! 😊 Posso te contar o que você vai aprender, quem é o Daniel, a data, o valor ou já te mandar o link. O que prefere?`],
   obrigado:()=>[`Imagina! Estou por aqui se precisar de algo mais. 💜`],
+  beneficio:()=>[`Você sai da Masterclass com atitudes práticas para aplicar já no dia seguinte: como preparar a equipe para cada contato com o cliente, os padrões que a Disney usa para encantar em escala e como transformar clientes satisfeitos em clientes fiéis.`,
+    `E ainda leva:<ul><li>Material de apoio em PDF</li><li>E-book <strong>Além dos Bastidores</strong></li><li>Certificado de participação</li><li>Cupom exclusivo de 45% no livro do Daniel</li></ul>Tudo por <strong>${CONFIG.preco}</strong>. ${convite}`],
+  duracao:()=>[`A Masterclass dura cerca de <strong>2 horas</strong>: ${CONFIG.horario}, na ${CONFIG.data}. Tempo suficiente para sair com o método e exemplos práticos.`,convite],
+  pagamento:()=>[`O pagamento é feito direto no <strong>Sympla</strong>, uma das maiores plataformas de eventos do Brasil. As formas de pagamento aparecem na tela de compra.`,`O ingresso custa <strong>${CONFIG.preco}</strong>. Quer o link?`],
+  equipe:()=>[`Que ótimo que você pensa em levar a equipe! 👏 Cada ingresso dá acesso a uma pessoa.`,`Para inscrever várias pessoas ou levar o conteúdo do Daniel para dentro da sua empresa, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te ajuda.`],
+  livro:()=>[`O Daniel é autor do livro <strong>"Checklist Cliente Feliz: Atendimento de Alto Impacto"</strong>.`,`Quem participa da Masterclass ganha um <strong>cupom exclusivo de 45% de desconto</strong> no livro, que é divulgado durante a aula. 📘 ${convite}`],
+  reembolso:()=>[`A compra é feita pelo Sympla, e o cancelamento segue a política da plataforma.`,`Se tiver qualquer dúvida sobre isso, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te responde.`],
+  seguro:()=>[`Pode ficar tranquilo(a)! 😊 A inscrição e o pagamento são feitos pelo <strong>Sympla</strong>, uma das maiores plataformas de eventos do Brasil, e esta já é a <strong>27ª edição</strong> da Masterclass do Daniel.`,convite],
+  disney:()=>[`A Masterclass é do <strong>Daniel Donato</strong> e não é um evento oficial da Disney. Ela é baseada nos estudos dele: mais de 20 visitas técnicas aos parques e lojas da Disney e os programas Backstage Magic e Keys to the Kingdom do Disney Institute.`,convite],
   outro:()=>[`Boa pergunta! Posso te ajudar com o conteúdo, o palestrante, a data, o valor e os bônus. Se for algo mais específico, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te responde no WhatsApp.`]
 };
 
 function intencao(t){
-  t=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  if(/falar com|pessoa|humano|atendente|whats|zap/.test(t))return 'pessoa';
-  if(/grupo|lembre|lembrar|depois|mais tarde|aviso|avisa/.test(t))return 'lembrar';
-  if(/link|quero|inscri|compr|pagar|pagamento|garantir|vaga|bora|fechado|ingresso/.test(t))return 'link';
-  if(/gravad|gravacao|replay|reprise|nao posso|nao consigo|horario ruim/.test(t))return 'aovivo';
-  if(/preco|valor|custa|quanto|parcel|caro|investimento/.test(t))return 'preco';
-  if(/bonus|ebook|e-book|certificado|material|pdf/.test(t))return 'bonus';
-  if(/para quem|publico|serve pra|serve para|meu negocio|meu segmento/.test(t))return 'paraquem';
-  if(/metod|jeito disney|frentes/.test(t))return 'metodo';
-  if(/quem e|daniel|palestrante|professor|apresenta|curriculo/.test(t))return 'quem';
-  if(/como assist|acesso|acessar|sympla|plataforma|streaming|celular/.test(t))return 'como';
-  if(/quando|data|dia|hora|horario|ao vivo|online/.test(t))return 'quando';
-  if(/aprend|conteudo|ensina|sobre o que|assunto|tema|palestra/.test(t))return 'aprender';
-  if(/obrigad|valeu|show|top|legal/.test(t))return 'obrigado';
-  if(/^(oi|ola|bom dia|boa tarde|boa noite|e ai)\b/.test(t))return 'oi';
+  t=' '+t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9$ ]/g,' ').replace(/\s+/g,' ')+' ';
+  const tem=re=>re.test(t);
+  if(tem(/falar com|pessoa|humano|atendente|whatsapp da equipe|telefone|contato da equipe/))return 'pessoa';
+  if(tem(/grupo de aviso|entrar no grupo|grupo do whats|lembre|lembrar|lembrete|mais tarde|me avis|avisa/))return 'lembrar';
+  if(tem(/reembols|devolu|cancel|desist|garantia|arrepend|estorno/))return 'reembolso';
+  if(tem(/golpe|seguro|confiavel|confiar|e real|verdade/))return 'seguro';
+  if(tem(/ pix|cartao|boleto|parcel|forma de pag|como pag|como faco pra pagar|como faco para pagar/))return 'pagamento';
+  if(tem(/link|inscrev|inscri|compr|garantir|minha vaga|quero participar|quero ir|vou participar|bora|fechado|quero sim|^ sim $|onde pago|ingresso/))return 'link';
+  if(tem(/equipe|time |funcionari|colaborador|levar mais|varias pessoas|mais de uma pessoa|empresa toda|minha turma|in company|incompany/))return 'equipe';
+  if(tem(/livro|checklist|cupom/))return 'livro';
+  if(tem(/ganho|ganhar|vantage|benefici|inclui|incluso|vem junto|o que tem|o que vem|o que eu levo|recebo|receber|vale a pena|por que eu|porque eu|pra que serve|para que serve/))return 'beneficio';
+  if(tem(/gravad|gravacao|replay|reprise|nao posso|nao consigo|nao vou poder|horario ruim|perder a aula/))return 'aovivo';
+  if(tem(/quanto tempo|dura|duracao|quantas horas|demora|termina/))return 'duracao';
+  if(tem(/preco|valor|custa|quanto e|quanto fica|quanto sai|caro|investimento|r\$|reais/))return 'preco';
+  if(tem(/bonus|ebook|e book|certificad|material|pdf|brinde/))return 'bonus';
+  if(tem(/oficial|parceria|afiliad|trabalhou na disney|funcionario da disney|e da disney/))return 'disney';
+  if(tem(/para quem|publico|serve pra|serve para|meu negocio|meu segmento|meu ramo|minha area|iniciante|pequen|clinica|loja|varejo|restaurante|salao|consultorio|servico|industria|saude/))return 'paraquem';
+  if(tem(/metod|jeito disney|frentes|pilares/))return 'metodo';
+  if(tem(/quem e|daniel|palestrante|professor|apresenta|curriculo|experiencia dele|formacao/))return 'quem';
+  if(tem(/como assist|como funciona|acesso|acessar|sympla|plataforma|streaming|celular|computador|zoom|internet|online como/))return 'como';
+  if(tem(/quando|data|que dia|qual dia|hora|horario|ao vivo|online/))return 'quando';
+  if(tem(/aprend|conteudo|ensina|sobre o que|assunto|tema|palestra|disney|atendimento|cliente/))return 'aprender';
+  if(tem(/obrigad|valeu|show|top|legal|otimo|perfeito|massa/))return 'obrigado';
+  if(tem(/^ (oi|ola|opa|bom dia|boa tarde|boa noite|e ai|eai|hey) /))return 'oi';
   return 'outro';
 }
 function qualPerfil(t){
