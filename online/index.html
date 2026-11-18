@@ -191,6 +191,9 @@ header{background:rgba(255,255,255,.88);border-bottom-color:#ECE7F6}
 .facts .aovivo span{color:#E9C46A}
 @keyframes pulso{0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}70%{box-shadow:0 0 0 7px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
 @media (prefers-reduced-motion:reduce){.facts .aovivo i{animation:none}}
+
+.tk .grp{font-size:13px;color:#BDB3A6;text-align:center;line-height:1.4}
+.tk .grp strong{color:#E9C46A}
 </style>
 
 <!-- ===== META PIXEL (opcional) =====
@@ -233,6 +236,7 @@ const CONFIG = {
   horario: "das 19h30 às 21h30 (horário de Brasília)",
   plataforma: "Sympla Streaming",
   preco: "R$ 47",
+  precoGrupo: "",                   /* ex.: "R$ 39 por pessoa" — vazio = "valor especial" */
   linkPagamento: "",                 /* cole aqui o link do Sympla */
   whatsapp: "5585999711108",         /* WhatsApp da equipe */
   mensagemWhats: "Olá! Sou {nome} e quero saber mais sobre a Masterclass Atendimento Mágico online ({data}).",
@@ -297,7 +301,7 @@ function botoes(lista){
   lista.forEach(([t,cls])=>{const b=document.createElement('button');b.type='button';b.className='chip'+(cls?' '+cls:'');b.textContent=t;b.onclick=()=>enviar(t);chips.appendChild(b)});
   chips.scrollLeft=0;leitura?posicionar(log.lastElementChild):rolar();
 }
-const TOPICOS=[["O que vou aprender?","aprender"],["Quem é o Daniel?","quem"],["Quanto custa?","preco"],["Data e horário","quando"],["Quais os bônus?","bonus"],["Para quem é?","paraquem"],["Como assisto?","como"]];
+const TOPICOS=[["O que vou aprender?","aprender"],["Quem é o Daniel?","quem"],["Quanto custa?","preco"],["Ingresso para equipe","equipe"],["Data e horário","quando"],["Quais os bônus?","bonus"],["Para quem é?","paraquem"],["Como assisto?","como"]];
 function opcoes(){
   if(modo!=='chat')return;
   const l=[["Eu quero o link","main"]];
@@ -320,9 +324,9 @@ const PROVA=`E não é teoria: esta é a <strong>27ª edição</strong> da Maste
   <div><b>20 anos</b><span>de consultoria</span></div><div><b>26</b><span>turmas anteriores</span></div></div>`;
 const OFERTA=()=>`<div class="tk"><div class="top"><div class="lbl">Ingresso · 27ª edição</div><div class="nm">Atendimento Mágico!<br>Um Case Disney</div><div class="when">${CONFIG.data[0].toUpperCase()+CONFIG.data.slice(1)}<br>${CONFIG.horario}<br>Online e ao vivo · ${CONFIG.plataforma}</div></div>
   <div class="cut"></div>
-  <div class="bot"><div class="price"><b>${CONFIG.preco}</b><span>valor único</span></div>
+  <div class="bot"><div class="price"><b>${CONFIG.preco}</b><span>por pessoa</span></div>
   <ul><li>Material de apoio em PDF</li><li>E-book <em>Além dos Bastidores</em></li><li>Certificado de participação</li><li><strong>Cupom exclusivo de 45% no livro "Checklist Cliente Feliz"</strong></li></ul>
-  <button type="button" class="cta" onclick="enviar('Eu quero o link')">Quero minha vaga</button></div></div>`;
+  <button type="button" class="cta" onclick="enviar('Eu quero o link')">Quero minha vaga</button><div class="grp">👥 Vai com a equipe? <strong>Ingresso Grupo</strong> de 5 a 10 pessoas${CONFIG.precoGrupo?" · "+CONFIG.precoGrupo:" com valor especial"}.</div></div></div>`;
 
 const PERFIS={
   dono:[`Então você sabe: o cliente não volta só pelo produto, ele volta pela experiência. O difícil é fazer a equipe inteira entregar o mesmo padrão, inclusive quando você não está por perto.`,
@@ -357,7 +361,7 @@ const R={
       <li><strong>Atendimento:</strong> princípios viram comportamentos na jornada do cliente</li>
       <li><strong>Liderança:</strong> líderes preparados para sustentar a cultura no dia a dia</li>
       <li><strong>Experiência:</strong> cada contato vira uma oportunidade de criar valor</li></ul>`,convite],
-  preco:()=>[`O ingresso tem valor único de <strong>${CONFIG.preco}</strong>, já com os 3 bônus: material de apoio, e-book e certificado. E quem participa ainda ganha um cupom de 45% no livro do Daniel.`,convite],
+  preco:()=>[`O ingresso tem valor único de <strong>${CONFIG.preco}</strong>, já com os 3 bônus: material de apoio, e-book e certificado. E quem participa ainda ganha um cupom de 45% no livro do Daniel.`,`Vai levar a equipe? Temos o <strong>Ingresso Grupo</strong>, de 5 a 10 pessoas, com ${CONFIG.precoGrupo?'<strong>'+CONFIG.precoGrupo+'</strong>':'valor especial'}. ${convite}`],
   aovivo:()=>[`A Masterclass é ao vivo, assim você acompanha os exemplos e tira dúvidas na hora com o Daniel.`,`Se o horário for um problema para você, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te ajuda.`],
   oi:()=>[`Olá! 😊 Posso te contar o que você vai aprender, quem é o Daniel, a data, o valor ou já te mandar o link. O que prefere?`],
   obrigado:()=>[`Imagina! Estou por aqui se precisar de algo mais. 💜`],
@@ -365,7 +369,7 @@ const R={
     `E ainda leva:<ul><li>Material de apoio em PDF</li><li>E-book <strong>Além dos Bastidores</strong></li><li>Certificado de participação</li><li>Cupom exclusivo de 45% no livro do Daniel</li></ul>Tudo por <strong>${CONFIG.preco}</strong>. ${convite}`],
   duracao:()=>[`A Masterclass dura cerca de <strong>2 horas</strong>: ${CONFIG.horario}, na ${CONFIG.data}. Tempo suficiente para sair com o método e exemplos práticos.`,convite],
   pagamento:()=>[`O pagamento é feito direto no <strong>Sympla</strong>, uma das maiores plataformas de eventos do Brasil. As formas de pagamento aparecem na tela de compra.`,`O ingresso custa <strong>${CONFIG.preco}</strong>. Quer o link?`],
-  equipe:()=>[`Que ótimo que você pensa em levar a equipe! 👏 Cada ingresso dá acesso a uma pessoa.`,`Para inscrever várias pessoas ou levar o conteúdo do Daniel para dentro da sua empresa, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te ajuda.`],
+  equipe:()=>[`Que ótimo que você pensa em levar a equipe! 👏 Temos o <strong>Ingresso Grupo</strong>, para equipes <strong>de 5 a 10 pessoas</strong>, com ${CONFIG.precoGrupo?'valor de <strong>'+CONFIG.precoGrupo+'</strong>':'valor especial'}.`,`Ele está disponível no Sympla, na mesma página do ingresso individual. É só tocar em <strong>"Eu quero o link"</strong> e escolher o Ingresso Grupo. Para mais de 10 pessoas ou para levar o conteúdo do Daniel para dentro da sua empresa, toque em <strong>"Falar com uma pessoa"</strong>.`],
   livro:()=>[`O Daniel é autor do livro <strong>"Checklist Cliente Feliz: Atendimento de Alto Impacto"</strong>.`,`Quem participa da Masterclass ganha um <strong>cupom exclusivo de 45% de desconto</strong> no livro, que é divulgado durante a aula. 📘 ${convite}`],
   reembolso:()=>[`A compra é feita pelo Sympla, e o cancelamento segue a política da plataforma.`,`Se tiver qualquer dúvida sobre isso, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te responde.`],
   seguro:()=>[`Pode ficar tranquilo(a)! 😊 A inscrição e o pagamento são feitos pelo <strong>Sympla</strong>, uma das maiores plataformas de eventos do Brasil, e esta já é a <strong>27ª edição</strong> da Masterclass do Daniel.`,convite],
@@ -381,8 +385,8 @@ function intencao(t){
   if(tem(/reembols|devolu|cancel|desist|garantia|arrepend|estorno/))return 'reembolso';
   if(tem(/golpe|seguro|confiavel|confiar|e real|verdade/))return 'seguro';
   if(tem(/ pix|cartao|boleto|parcel|forma de pag|como pag|como faco pra pagar|como faco para pagar/))return 'pagamento';
+  if(tem(/equipe|ingresso grupo|em grupo|grupo de pessoas|time |funcionari|colaborador|levar mais|varias pessoas|mais de uma pessoa|empresa toda|minha turma|in company|incompany/))return 'equipe';
   if(tem(/link|inscrev|inscri|compr|garantir|minha vaga|quero participar|quero ir|vou participar|bora|fechado|quero sim|^ sim $|onde pago|ingresso/))return 'link';
-  if(tem(/equipe|time |funcionari|colaborador|levar mais|varias pessoas|mais de uma pessoa|empresa toda|minha turma|in company|incompany/))return 'equipe';
   if(tem(/livro|checklist|cupom/))return 'livro';
   if(tem(/ganho|ganhar|vantage|benefici|inclui|incluso|vem junto|o que tem|o que vem|o que eu levo|recebo|receber|vale a pena|por que eu|porque eu|pra que serve|para que serve/))return 'beneficio';
   if(tem(/gravad|gravacao|replay|reprise|nao posso|nao consigo|nao vou poder|horario ruim|perder a aula/))return 'aovivo';
