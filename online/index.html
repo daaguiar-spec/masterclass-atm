@@ -5,10 +5,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Masterclass Atendimento Mágico</title>
-<meta name="description" content="27ª Masterclass Atendimento Mágico! Um Case Disney, com Daniel Donato. Online e ao vivo, 26 de novembro de 2026, 19h. Ingresso R$ 47.">
+<meta name="description" content="27ª Masterclass Atendimento Mágico! Um Case Disney, com Daniel Donato. Online e ao vivo, 3 de dezembro de 2026, 19h30. Ingresso R$ 47.">
 <meta property="og:title" content="Masterclass Atendimento Mágico! Um Case Disney">
 <meta property="og:image" content="https://masterclass-atm-case-disney.vercel.app/daniel.jpg">
-<meta property="og:description" content="Online e ao vivo com Daniel Donato, 26/11 às 19h. Ingresso R$ 47 + 3 bônus.">
+<meta property="og:description" content="Online e ao vivo com Daniel Donato, 03/12 às 19h30. Ingresso R$ 47 + 3 bônus.">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}[hidden]{display:none!important}</style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -216,9 +216,10 @@ Modo teste: abra a página com ?teste no final do link para ver se o lead foi en
 /* ====== DADOS DA MASTERCLASS (edite aqui) ====== */
 const CONFIG = {
   titulo: "27ª Masterclass: Atendimento Mágico! Um Case Disney",
-  data: "quinta-feira, 26 de novembro",
-  dataCurta: "26/11",
-  horario: "das 19h00 às 21h30 (horário de Brasília)",
+  data: "quinta-feira, 3 de dezembro",
+  dataCurta: "03/12",
+  grupo: "https://chat.whatsapp.com/HUSBZ1FL4zcKCOwdGj24mf",
+  horario: "das 19h30 às 21h30 (horário de Brasília)",
   plataforma: "Sympla Streaming",
   preco: "R$ 47",
   linkPagamento: "",                 /* cole aqui o link do Sympla */
@@ -254,8 +255,8 @@ const TESTE=params.has('teste');
 function track(ev){try{window.fbq&&fbq('track',ev)}catch(e){}}
 let busy=false, perfil=null, modo='chat', destino=null, lead={nome:'',fone:''}, leadEnviado=false, lembreteFeito=false, ofertaMostrada=false, inativo=null;
 const vistos=new Set();
-const EVENTO=new Date('2026-11-26T19:00:00-03:00');
-const dias=Math.ceil((EVENTO-new Date())/864e5);
+const EVENTO=new Date('2026-12-03T19:30:00-03:00');
+const dias=(()=>{const [d,m,y]=new Date().toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'}).split('/').map(Number);return Math.round((Date.UTC(2026,11,3)-Date.UTC(y,m-1,d))/864e5)})();
 const STATUS=dias>1?`online · faltam ${dias} dias`:dias===1?'online · é amanhã!':dias===0?'online · é hoje!':'online';
 st.textContent=STATUS;
 
@@ -290,7 +291,7 @@ function opcoes(){
   if(modo!=='chat')return;
   const l=[["Eu quero o link","main"]];
   TOPICOS.filter(([,k])=>!vistos.has(k)).forEach(([t])=>l.push([t]));
-  if(!leadEnviado)l.push(["Me lembre depois"]);
+  if(!leadEnviado)l.push(["Entrar no grupo de avisos"]);
   l.push(["Falar com uma pessoa"]);
   botoes(l);
   agendarLembrete();
@@ -355,7 +356,7 @@ const R={
 function intencao(t){
   t=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   if(/falar com|pessoa|humano|atendente|whats|zap/.test(t))return 'pessoa';
-  if(/lembre|lembrar|depois|mais tarde|aviso|avisa/.test(t))return 'lembrar';
+  if(/grupo|lembre|lembrar|depois|mais tarde|aviso|avisa/.test(t))return 'lembrar';
   if(/link|quero|inscri|compr|pagar|pagamento|garantir|vaga|bora|fechado|ingresso/.test(t))return 'link';
   if(/gravad|gravacao|replay|reprise|nao posso|nao consigo|horario ruim/.test(t))return 'aovivo';
   if(/preco|valor|custa|quanto|parcel|caro|investimento/.test(t))return 'preco';
@@ -393,11 +394,22 @@ async function enviarLink(){
       `Depois da inscrição, o Sympla envia o acesso para o seu e-mail. Te vejo lá! ✨`]);
     opcoes();
   }else{
-    await bot([`Ótimo! 🎉 As inscrições abrem em breve.`]);
-    if(leadEnviado){await bot([`Já anotei seu contato, ${lead.nome}. Assim que abrir, a equipe te chama no WhatsApp.`]);opcoes();}
-    else{destino='aviso';await pedirNome(`Me diz seu nome e WhatsApp que a equipe te avisa assim que abrir. Qual é o seu nome?`);}
+    await bot([`Ótimo! 🎉 As inscrições abrem em breve.`,`Entre no nosso grupo do WhatsApp: o link de inscrição sai lá primeiro.${BOTAO_GRUPO()}`]);
+    opcoes();
   }
 }
+
+/* ---------- grupo do WhatsApp ---------- */
+const BOTAO_GRUPO=()=>`<a class="cta" href="${CONFIG.grupo}" target="_blank" rel="noopener" onclick="track('Contact')">Entrar no grupo do WhatsApp</a>`;
+let esperandoVolta=false, conviteFeito=false;
+document.addEventListener('click',e=>{if(e.target.closest('a.cta[href*="sympla"]'))esperandoVolta=true});
+document.addEventListener('visibilitychange',async()=>{
+  if(document.visibilityState!=='visible'||!esperandoVolta||conviteFeito)return;
+  esperandoVolta=false;conviteFeito=true;
+  while(busy)await wait(300);
+  await bot([`Conseguiu garantir sua vaga? 🎉 Então entre no grupo dos participantes no WhatsApp. É lá que mandamos os avisos e o link no dia da Masterclass.${BOTAO_GRUPO()}`]);
+  opcoes();
+});
 
 /* ---------- captura de contato ---------- */
 async function pedirNome(texto){
@@ -458,8 +470,8 @@ function agendarLembrete(){
     if(busy||modo!=='chat'||leadEnviado)return;
     if(!novo.hidden||faltaVer()){agendarLembrete();return}
     lembreteFeito=true;
-    await bot([`Ainda está por aí? 😊 Se agora não for o momento, posso pedir para a equipe te lembrar da Masterclass pelo WhatsApp.`]);
-    botoes([["Sim, me lembre","main"],["Eu quero o link"],["Tenho uma dúvida"]]);
+    await bot([`Ainda está por aí? 😊 Se agora não for o momento, entre no nosso grupo do WhatsApp. Lá você recebe os avisos e não perde a data.${BOTAO_GRUPO()}`]);
+    opcoes();
   },60000);
 }
 
@@ -494,8 +506,7 @@ async function enviar(texto){
     destino='pessoa';await pedirNome(`Claro! Vou te passar para a equipe no WhatsApp. Antes, qual é o seu nome?`);return;
   }
   if(k==='lembrar'||/^sim, me lembre$/i.test(texto)){
-    if(leadEnviado){await bot([`Seu contato já está anotado, ${lead.nome.split(' ')[0]}. A equipe vai te lembrar! 😉`]);opcoes();return}
-    destino='lembrete';await pedirNome(`Combinado! Qual é o seu nome?`);return;
+    await bot([`Combinado! No grupo do WhatsApp você recebe os avisos da Masterclass, a contagem regressiva e o link no dia. 😉${BOTAO_GRUPO()}`]);opcoes();return;
   }
   if(/^tenho uma duvida$|^tenho uma dúvida$/i.test(texto.trim())){await bot([`Claro! Escreva sua dúvida ou escolha um dos assuntos abaixo.`]);opcoes();return}
   vistos.add(k);
@@ -530,7 +541,7 @@ const CAPA='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGB
 (async()=>{
   const cv=document.createElement('div');cv.className='cover';
   cv.innerHTML=`<img class="capa" src="${CAPA}" alt="Masterclass online Atendimento Mágico com Daniel Donato, 27ª edição">
-   <div class="tx"><div class="facts"><div><b>26/11</b><span>quinta</span></div><div><b>19h</b><span>Brasília</span></div><div><b>Ao vivo</b><span>online</span></div><div><b>R$ 47</b><span>ingresso</span></div></div></div>`;
+   <div class="tx"><div class="facts"><div><b>03/12</b><span>quinta</span></div><div><b>19h30</b><span>Brasília</span></div><div><b>Ao vivo</b><span>online</span></div><div><b>R$ 47</b><span>ingresso</span></div></div></div>`;
   log.appendChild(cv);
   document.getElementById('vaga').onclick=()=>enviar('Eu quero o link');
   await wait(700);
