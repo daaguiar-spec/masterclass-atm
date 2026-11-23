@@ -196,6 +196,9 @@ header{background:rgba(255,255,255,.88);border-bottom-color:#ECE7F6}
 .tk .grp strong{color:#E9C46A}
 
 .msg .tk strong{color:#E9C46A}
+
+/* botão secundário (grupo): só contorno, o dourado fica para a compra */
+.cta.sec{background:transparent;color:var(--ink);border:1.5px solid #C8952F;box-shadow:none;animation:none;font-weight:600}
 </style>
 
 <!-- ===== META PIXEL (opcional) =====
@@ -440,7 +443,7 @@ async function enviarLink(){
 }
 
 /* ---------- grupo do WhatsApp ---------- */
-const BOTAO_GRUPO=()=>`<a class="cta" href="${CONFIG.grupo}" target="_blank" rel="noopener" onclick="track('Contact')">Entrar no grupo do WhatsApp</a>`;
+const BOTAO_GRUPO=()=>`<a class="cta sec" href="${CONFIG.grupo}" target="_blank" rel="noopener" onclick="track('Contact')">Entrar no grupo do WhatsApp</a>`;
 let esperandoVolta=false, conviteFeito=false;
 document.addEventListener('click',e=>{if(e.target.closest('a.cta[href*="sympla"]'))esperandoVolta=true});
 document.addEventListener('visibilitychange',async()=>{
@@ -503,16 +506,24 @@ async function concluirContato(){
 }
 
 /* lembrete se a pessoa ficar parada depois de ver a oferta */
+let etapaLembrete=0;
 function agendarLembrete(){
   clearTimeout(inativo);
-  if(lembreteFeito||leadEnviado||!ofertaMostrada)return;
+  if(etapaLembrete>=2||leadEnviado||!ofertaMostrada||esperandoVolta||conviteFeito)return;
   inativo=setTimeout(async()=>{
-    if(busy||modo!=='chat'||leadEnviado)return;
+    if(busy||modo!=='chat'||leadEnviado||esperandoVolta||conviteFeito)return;
     if(!novo.hidden||faltaVer()){agendarLembrete();return}
-    lembreteFeito=true;
-    await bot([`Ainda está por aí? 😊 Se agora não for o momento, entre no nosso grupo do WhatsApp. Lá você recebe os avisos e não perde a data.${BOTAO_GRUPO()}`]);
-    opcoes();
-  },60000);
+    if(etapaLembrete===0){
+      etapaLembrete=1;
+      await bot([`Ficou alguma dúvida que eu possa te ajudar a resolver? 😊`],false);
+      botoes([["Eu quero o link","main"],["Tenho uma dúvida"],["Ingresso para equipe"]]);
+      agendarLembrete();
+    }else{
+      etapaLembrete=2;
+      await bot([`Se quiser pensar com calma, entre no nosso grupo de avisos no WhatsApp. Lá você recebe os lembretes e não perde a data.${BOTAO_GRUPO()}`],false);
+      opcoes();
+    }
+  },etapaLembrete===0?150000:120000);
 }
 
 /* ---------- entrada da pessoa ---------- */
