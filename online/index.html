@@ -5,10 +5,10 @@
 <meta name="theme-color" content="#FFFFFF">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Masterclass Atendimento Mágico</title>
-<meta name="description" content="27ª Masterclass Atendimento Mágico! Um Case Disney, com Daniel Donato. Online e ao vivo, 3 de dezembro de 2026, 19h30. Ingresso R$ 47.">
+<meta name="description" content="27ª Masterclass Atendimento Mágico! Um Case Disney, com Daniel Donato. Online e ao vivo, 9 de dezembro de 2026, 19h30. Ingresso R$ 47.">
 <meta property="og:title" content="Masterclass Atendimento Mágico! Um Case Disney">
 <meta property="og:image" content="https://masterclass-atm-case-disney.vercel.app/daniel.jpg">
-<meta property="og:description" content="Online e ao vivo com Daniel Donato, 03/12 às 19h30. Ingresso R$ 47 + 3 bônus.">
+<meta property="og:description" content="Online e ao vivo com Daniel Donato, 09/12 às 19h30. Ingresso R$ 47 + 3 bônus.">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}[hidden]{display:none!important}</style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -235,8 +235,8 @@ Modo teste: abra a página com ?teste no final do link para ver se o lead foi en
 /* ====== DADOS DA MASTERCLASS (edite aqui) ====== */
 const CONFIG = {
   titulo: "27ª Masterclass: Atendimento Mágico! Um Case Disney",
-  data: "quinta-feira, 3 de dezembro",
-  dataCurta: "03/12",
+  data: "quarta-feira, 9 de dezembro",
+  dataCurta: "09/12",
   grupo: "https://chat.whatsapp.com/HUSBZ1FL4zcKCOwdGj24mf",
   horario: "das 19h30 às 21h30 (horário de Brasília)",
   plataforma: "Sympla Streaming",
@@ -275,8 +275,8 @@ const TESTE=params.has('teste');
 function track(ev){try{window.fbq&&fbq('track',ev)}catch(e){}}
 let busy=false, perfil=null, modo='chat', destino=null, lead={nome:'',fone:''}, leadEnviado=false, lembreteFeito=false, ofertaMostrada=false, inativo=null;
 const vistos=new Set();
-const EVENTO=new Date('2026-12-03T19:30:00-03:00');
-const dias=(()=>{const [d,m,y]=new Date().toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'}).split('/').map(Number);return Math.round((Date.UTC(2026,11,3)-Date.UTC(y,m-1,d))/864e5)})();
+const EVENTO=new Date('2026-12-09T19:30:00-03:00');
+const dias=(()=>{const [d,m,y]=new Date().toLocaleDateString('pt-BR',{timeZone:'America/Sao_Paulo'}).split('/').map(Number);return Math.round((Date.UTC(2026,11,9)-Date.UTC(y,m-1,d))/864e5)})();
 const STATUS=dias>1?`online · faltam ${dias} dias`:dias===1?'online · é amanhã!':dias===0?'online · é hoje!':'online';
 st.textContent=STATUS;
 
@@ -520,7 +520,7 @@ function agendarLembrete(){
       agendarLembrete();
     }else{
       etapaLembrete=2;
-      await bot([`Quer receber dicas do Daniel e os avisos da Masterclass até o dia 03/12? Entre no nosso grupo do WhatsApp. 📲${BOTAO_GRUPO()}`],false);
+      await bot([`Quer receber dicas do Daniel e os avisos da Masterclass até o dia 09/12? Entre no nosso grupo do WhatsApp. 📲${BOTAO_GRUPO()}`],false);
       opcoes();
     }
   },etapaLembrete===0?150000:120000);
@@ -594,7 +594,7 @@ const CAPA='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGB
 (async()=>{
   const cv=document.createElement('div');cv.className='cover';
   cv.innerHTML=`<img class="capa" src="${CAPA}" alt="Masterclass online Atendimento Mágico com Daniel Donato, 27ª edição">
-   <div class="tx"><div class="facts"><div><b>03/12</b><span>quinta</span></div><div><b>19h30</b><span>Brasília</span></div><div class="aovivo"><b><i></i>Ao vivo</b><span>online</span></div><div><b>R$ 47</b><span>ingresso</span></div></div></div>`;
+   <div class="tx"><div class="facts"><div><b>09/12</b><span>quarta</span></div><div><b>19h30</b><span>Brasília</span></div><div class="aovivo"><b><i></i>Ao vivo</b><span>online</span></div><div><b>R$ 47</b><span>ingresso</span></div></div></div>`;
   log.appendChild(cv);
   document.getElementById('vaga').onclick=()=>enviar('Eu quero o link');
   await wait(700);
