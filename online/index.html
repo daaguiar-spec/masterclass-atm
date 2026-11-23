@@ -328,7 +328,7 @@ const OFERTA=()=>`<div class="tk"><div class="top"><div class="lbl">Ingresso · 
   <div class="cut"></div>
   <div class="bot"><div class="price"><b>${CONFIG.preco}</b><span>por pessoa</span></div>
   <ul><li>Material de apoio em PDF</li><li>E-book <em>Além dos Bastidores</em></li><li>Certificado de participação</li><li><strong>Cupom exclusivo de 45% no livro "Checklist Cliente Feliz"</strong></li></ul>
-  <button type="button" class="cta" onclick="enviar('Eu quero o link')">Quero minha vaga</button><div class="grp">👥 Vai com a equipe? <strong>Ingresso Grupo</strong> de 5 a 10 pessoas${CONFIG.precoGrupo?" · "+CONFIG.precoGrupo:" com valor especial"}.</div></div></div>`;
+  <button type="button" class="cta" onclick="enviar('Eu quero o link')">Quero minha vaga</button><div class="grp">👥 Quer que sua equipe assista também? <strong>Ingresso Grupo</strong> de 5 a 10 pessoas${CONFIG.precoGrupo?" · "+CONFIG.precoGrupo:" com valor especial"}.</div></div></div>`;
 
 const PERFIS={
   dono:[`Então você sabe: o cliente não volta só pelo produto, ele volta pela experiência. O difícil é fazer a equipe inteira entregar o mesmo padrão, inclusive quando você não está por perto.`,
@@ -363,16 +363,16 @@ const R={
       <li><strong>Atendimento:</strong> princípios viram comportamentos na jornada do cliente</li>
       <li><strong>Liderança:</strong> líderes preparados para sustentar a cultura no dia a dia</li>
       <li><strong>Experiência:</strong> cada contato vira uma oportunidade de criar valor</li></ul>`,convite],
-  preco:()=>[`O ingresso tem valor único de <strong>${CONFIG.preco}</strong>, já com os 3 bônus: material de apoio, e-book e certificado. E quem participa ainda ganha um cupom de 45% no livro do Daniel.`,`Vai levar a equipe? Temos o <strong>Ingresso Grupo</strong>, de 5 a 10 pessoas, com ${CONFIG.precoGrupo?'<strong>'+CONFIG.precoGrupo+'</strong>':'valor especial'}. ${convite}`],
+  preco:()=>[`O ingresso tem valor único de <strong>${CONFIG.preco}</strong>, já com os 3 bônus: material de apoio, e-book e certificado. E quem participa ainda ganha um cupom de 45% no livro do Daniel.`,`Vai inscrever a sua equipe? Temos o <strong>Ingresso Grupo</strong>, de 5 a 10 pessoas, com ${CONFIG.precoGrupo?'<strong>'+CONFIG.precoGrupo+'</strong>':'valor especial'}. ${convite}`],
   aovivo:()=>[`A Masterclass é ao vivo, assim você acompanha os exemplos e tira dúvidas na hora com o Daniel.`,`Se o horário for um problema para você, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te ajuda.`],
   oi:()=>[`Olá! 😊 Posso te contar o que você vai aprender, quem é o Daniel, a data, o valor ou já te mandar o link. O que prefere?`],
   obrigado:()=>[`Imagina! Estou por aqui se precisar de algo mais. 💜`],
-  grupoduvida:()=>[`Você quer saber do <strong>Ingresso Grupo</strong> (para levar a equipe, de 5 a 10 pessoas) ou do nosso <strong>grupo de avisos no WhatsApp</strong>?`],
+  grupoduvida:()=>[`Você quer saber do <strong>Ingresso Grupo</strong> (para inscrever a sua equipe, de 5 a 10 pessoas) ou do nosso <strong>grupo de avisos no WhatsApp</strong>?`],
   beneficio:()=>[`Você sai da Masterclass com atitudes práticas para aplicar já no dia seguinte: como preparar a equipe para cada contato com o cliente, os padrões que a Disney usa para encantar em escala e como transformar clientes satisfeitos em clientes fiéis.`,
     `E ainda leva:<ul><li>Material de apoio em PDF</li><li>E-book <strong>Além dos Bastidores</strong></li><li>Certificado de participação</li><li>Cupom exclusivo de 45% no livro do Daniel</li></ul>Tudo por <strong>${CONFIG.preco}</strong>. ${convite}`],
   duracao:()=>[`A Masterclass dura cerca de <strong>2 horas</strong>: ${CONFIG.horario}, na ${CONFIG.data}. Tempo suficiente para sair com o método e exemplos práticos.`,convite],
   pagamento:()=>[`O pagamento é feito direto no <strong>Sympla</strong>, uma das maiores plataformas de eventos do Brasil. As formas de pagamento aparecem na tela de compra.`,`O ingresso custa <strong>${CONFIG.preco}</strong>. Quer o link?`],
-  equipe:()=>[`Que ótimo que você pensa em levar a equipe! 👏 Temos o <strong>Ingresso Grupo</strong>, para equipes <strong>de 5 a 10 pessoas</strong>, com ${CONFIG.precoGrupo?'valor de <strong>'+CONFIG.precoGrupo+'</strong>':'valor especial'}.`,`Ele está disponível no Sympla, na mesma página do ingresso individual. É só tocar em <strong>"Eu quero o link"</strong> e escolher o Ingresso Grupo. Para mais de 10 pessoas ou para levar o conteúdo do Daniel para dentro da sua empresa, toque em <strong>"Falar com uma pessoa"</strong>.`],
+  equipe:()=>[`Que ótimo que você pensa em inscrever a sua equipe! 👏 A Masterclass é online, cada pessoa assiste de onde estiver. Temos o <strong>Ingresso Grupo</strong>, para equipes <strong>de 5 a 10 pessoas</strong>, com ${CONFIG.precoGrupo?'valor de <strong>'+CONFIG.precoGrupo+'</strong>':'valor especial'}.`,`Ele está disponível no Sympla, na mesma página do ingresso individual. É só tocar em <strong>"Eu quero o link"</strong> e escolher o Ingresso Grupo. Para mais de 10 pessoas ou para levar o conteúdo do Daniel para dentro da sua empresa, toque em <strong>"Falar com uma pessoa"</strong>.`],
   livro:()=>[`O Daniel é autor do livro <strong>"Checklist Cliente Feliz: Atendimento de Alto Impacto"</strong>.`,`Quem participa da Masterclass ganha um <strong>cupom exclusivo de 45% de desconto</strong> no livro, que é divulgado durante a aula. 📘 ${convite}`],
   reembolso:()=>[`A compra é feita pelo Sympla, e o cancelamento segue a política da plataforma.`,`Se tiver qualquer dúvida sobre isso, toque em <strong>"Falar com uma pessoa"</strong> que a equipe te responde.`],
   seguro:()=>[`Pode ficar tranquilo(a)! 😊 A inscrição e o pagamento são feitos pelo <strong>Sympla</strong>, uma das maiores plataformas de eventos do Brasil, e esta já é a <strong>27ª edição</strong> da Masterclass do Daniel.`,convite],
@@ -431,7 +431,7 @@ async function enviarLink(){
   if(CONFIG.linkPagamento){
     await bot([`Ótimo! 🎉 Aqui está o seu link para garantir a vaga:`,
       `<strong>${CONFIG.titulo}</strong><br>${CONFIG.dataCurta}, ${CONFIG.horario}<br>Ingresso: <strong>${CONFIG.preco}</strong><a class="cta" href="${CONFIG.linkPagamento}" target="_blank" rel="noopener" onclick="track('InitiateCheckout')">Garantir minha vaga</a>`,
-      `Vai com a equipe? Na página do Sympla, escolha o <strong>Ingresso Grupo</strong> (5 a 10 pessoas, ${CONFIG.precoGrupo}).`,`Depois da inscrição, o Sympla envia o acesso para o seu e-mail. Te vejo lá! ✨`]);
+      `Vai inscrever sua equipe? Na página do Sympla, escolha o <strong>Ingresso Grupo</strong> (5 a 10 pessoas, ${CONFIG.precoGrupo}).`,`Depois da inscrição, o Sympla envia o acesso para o seu e-mail. Te vejo lá! ✨`]);
     opcoes();
   }else{
     await bot([`Ótimo! 🎉 As inscrições abrem em breve.`,`Entre no nosso grupo do WhatsApp: o link de inscrição sai lá primeiro.${BOTAO_GRUPO()}`]);
